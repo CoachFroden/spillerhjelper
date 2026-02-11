@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Refleksjon</title>
+  <meta name="theme-color" content="#0f172a" />
+
+  <link rel="stylesheet" href="./spiller-refleksjon.css" />
+  
+  <!-- PWA / App -->
+<link rel="manifest" href="./manifest.json">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Refleksjon">
+
+<link rel="apple-touch-icon" href="icon-180.png">
+
+</head>
+
+<body>
+  <main class="container">
+
+    <div id="authBox" class="card" hidden>
+
+<h2 class="auth-title">Refleksjon</h2>
+
+<p class="auth-intro">
+  Dette er <strong>din personlige side</strong>.
+</p>
+
+<p class="auth-intro">
+  Her svarer du kort etter trening.
+</p>
+
+<p class="auth-intro muted">
+  Bare du og treneren kan se det du skriver.
+</p>
+
+
+
+      <!-- LOGIN -->
+      <div id="loginBox">
+        <input id="loginEmail" placeholder="Brukernavn" />
+        <input id="loginPassword" type="password" placeholder="Passord" />
+        <button id="loginBtn">Logg inn</button>
+		<p class="hint" style="margin-top:10px;">
+  Du trenger ikke e-post. Brukernavn får du av trener eller lager selv.
+</p>
+
+		<p class="hint" style="margin-top:10px;">
+  Glemt passord? Ta kontakt med trener.
+</p>
+
+
+        <p>
+          <button id="showRegisterBtn" class="secondary">
+  Har du ikke konto? Lag bruker
+</button>
+
+        </p>
+
+        <div class="status" id="loginStatus"></div>
+      </div>
+
+      <!-- REGISTRERING -->
+      <div id="registerBox" hidden>
+        <input id="registerName" placeholder="Navn" />
+        <input id="registerEmail" placeholder="Brukernavn" />
+        <input id="registerPassword" type="password" placeholder="Passord" />
+        <input id="registerPasswordConfirm" type="password" placeholder="Gjenta passord" />
+
+<p class="hint" style="margin-top:6px;">
+  Skriv samme passord to ganger for å være sikker.
+</p>
+
+
+        <button id="registerBtn">Opprett bruker</button>
+
+        <p>
+          <button id="showLoginBtn" class="secondary">
+  ← Tilbake
+</button>
+
+        </p>
+		
+		
+
+        <div class="status" id="registerStatus"></div>
+		
+      </div>
+	  <hr style="margin: 20px 0; opacity: 0.3;" />
+
+<p
+  id="showCoachLogin"
+  style="cursor:pointer; opacity:0.7; font-size:0.9em;"
+>
+  Er du trener? Logg inn her
+</p>
+
+<div id="coachLoginBox" hidden>
+
+  <h3>Trener</h3>
+
+  <input
+    id="coachEmail"
+    type="email"
+    placeholder="E-post (trener)"
+    autocomplete="email"
+  />
+
+  <input
+    id="coachPassword"
+    type="password"
+    placeholder="Passord"
+    autocomplete="current-password"
+  />
+<p>
+  <button id="coachLoginBtn">
+    Logg inn som trener
+  </button>
+</p>
+  <p id="coachLoginStatus" class="status"></p>
+
+</div>
+
+    </div>
+	
+	
+
+    <div id="appBox">
+	
+      <header class="header">
+        <h1>Refleksjon</h1>
+        <p class="intro">Her kan du fylle ut hva du synest om ukas trening.</p>
+      </header>
+
+      <section class="grid">
+        <!-- SESONGFOKUS -->
+        <div class="card season-card">
+  <div class="card-top">
+    <h2>Mål for sesongen</h2>
+
+    <div class="card-actions">
+  <div id="loggedInUser" class="logged-in-user" hidden>
+    👤 <span id="loggedInUserName"></span>
+  </div>
+
+  <button id="backBtn" class="back-btn">← Tilbake til Min side</button>
+
+
+</div>
+  </div>
+
+
+          <div class="inline">
+            <span class="pill" id="seasonBadge">Ikke satt</span>
+            <span class="pill" id="seasonUpdated">—</span>
+          </div>
+
+          <label for="seasonGoal">Mitt viktigste mål denne sesongen</label>
+          <input id="seasonGoal" type="text" maxlength="120" />
+
+          <div class="btns">
+            <button id="saveSeasonBtn" class="secondary">Lagre mål</button>
+            <button id="clearSeasonBtn" class="danger" type="button">Slett mål</button>
+          </div>
+
+          <div class="status" id="seasonStatus"></div>
+        </div>
+
+        <!-- UKEREFLEKSJON -->
+        <div class="card">
+          <h2>Ukerefleksjon</h2>
+
+          <form id="weeklyForm">
+            <label for="effort">1) Innsats denne uka</label>
+            <select id="effort" required>
+              <option value="" disabled selected>Velg</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+
+            <label for="energy">2) Energi</label>
+            <select id="energy" required>
+              <option value="" disabled selected>Velg</option>
+              <option value="Lav">Lav</option>
+              <option value="Middels">Middels</option>
+              <option value="Høy">Høy</option>
+            </select>
+
+            <label for="workedOnSeasonGoal">3) Jobbet med sesongmål</label>
+            <select id="workedOnSeasonGoal" required>
+              <option value="" disabled selected>Velg</option>
+              <option value="Ja">Ja</option>
+              <option value="Litt">Litt</option>
+              <option value="Nei">Nei</option>
+            </select>
+
+            <label for="goodThing">Fornøyd med</label>
+            <textarea id="goodThing"></textarea>
+
+            <label for="improveThing">Neste uke</label>
+            <textarea id="improveThing"></textarea>
+
+            <label for="coachNote">Til trener</label>
+            <textarea id="coachNote"></textarea>
+
+            <div class="btns">
+              <button type="submit">Send inn</button>
+              <button id="resetWeeklyBtn" class="secondary" type="button">Tøm</button>
+            </div>
+
+            <div class="status" id="weeklyStatus"></div>
+          </form>
+        </div>
+      </section>
+    </div>
+
+  </main>
+
+<script type="module" src="./spiller-refleksjon.js"></script>
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("./sw.js");
+}
+</script>
+
+</body>
+</html>

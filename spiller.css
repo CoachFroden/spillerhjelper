@@ -1,0 +1,310 @@
+:root {
+  --accent: #ffd42a;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: #000;
+  color: #fff;
+}
+
+/* ================= LOGIN ================= */
+
+.login-section {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-box {
+  width: 320px;
+  background: #0f1720;
+  padding: 24px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 0 40px rgba(90,150,255,.35);
+}
+
+.login-box input {
+  width: 100%;
+  padding: 12px;
+  margin-top: 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,.15);
+  background: rgba(255,255,255,.08);
+  color: #fff;
+}
+
+.login-box button {
+  margin-top: 16px;
+  width: 100%;
+  height: 46px;
+  border-radius: 10px;
+  border: none;
+  background: #2a3b52;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.error {
+  display: none;
+  color: #ff4444;
+  margin-top: 6px;
+  font-size: .9rem;
+}
+
+/* ================= PLAN ================= */
+
+.hidden {
+  display: none;
+}
+
+.plan-page {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 18px;
+}
+
+.plan-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.plan-avatar {
+  width: 48px;
+  height: 48px;
+  background: #1b2732;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.plan-name {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.plan-sub {
+  font-size: .85rem;
+  color: #9fb0bd;
+}
+
+.plan-card {
+  background: rgba(255,255,255,.04);
+  border-radius: 10px;
+  padding: 14px;
+  border: 1px solid rgba(255,255,255,.06);
+}
+
+.plan-card-title {
+  color: var(--accent);
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.plan-updated {
+  font-size: .8rem;
+  color: #9fb0bd;
+}
+
+.plan-section {
+  margin-top: 18px;
+}
+
+.plan-section-title {
+  font-size: .75rem;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  margin-bottom: 6px;
+}
+
+.plan-section-list {
+  padding-left: 18px;
+}
+
+.plan-comment-box {
+  background: #0b1220;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.plan-stats {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.stat {
+  flex: 1;
+  text-align: center;
+  background: rgba(255,255,255,.03);
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.stat-num {
+  font-size: 1.4rem;
+  font-weight: 800;
+}
+.plan-card.yellow { border-left: 4px solid #f5c542; }
+.plan-card.blue   { border-left: 4px solid #4aa3ff; }
+.plan-card.green  { border-left: 4px solid #4caf50; }
+
+.plan-card {
+  background: rgba(255,255,255,0.04);
+  padding: 12px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+}
+
+.plan-list {
+  margin: 8px 0 0;
+  padding-left: 18px;
+}
+/* ================= FARGER SOM I DESIGN ================= */
+
+/* Seksjonstitler */
+.plan-section-title.teknisk {
+  color: #ff4d4d;
+}
+
+.plan-section-title.taktisk {
+  color: #ffd42a;
+}
+
+.plan-section-title.fysisk {
+  color: #4aa3ff;
+}
+
+/* Punktfarger */
+.plan-section.teknisk li { color: #ff4d4d; }
+.plan-section.taktisk li { color: #ffd42a; }
+.plan-section.fysisk  li { color: #4aa3ff; }
+
+/* Kommentar */
+.plan-comment-box {
+  border: 1px solid #4caf50;
+  color: #4caf50;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+/* Lukk-knapp */
+.close-btn {
+  margin-top: 18px;
+  width: 100%;
+  height: 46px;
+  border-radius: 10px;
+  border: none;
+  background: #1f2b3a;
+  color: white;
+  font-size: 1rem;
+  font-weight: 300;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  background: #2a3b52;
+}
+/* ================= KOMMENTAR (Riktig som design) ================= */
+
+.plan-comment {
+  margin-top: 18px;
+  background: linear-gradient(
+    180deg,
+    rgba(20, 25, 32, 0.95),
+    rgba(10, 14, 20, 0.95)
+  );
+  border-radius: 12px;
+  padding: 16px;
+  border: 1px solid rgba(76, 175, 80, 0.6);
+  box-shadow: inset 0 0 0 1px rgba(76, 175, 80, 0.15);
+}
+
+.plan-comment-title {
+  font-weight: 400;
+  font-size: 1rem;
+  margin-bottom: 10px;
+  color: #ffffff;
+}
+
+.plan-comment-text {
+  color: #4caf50;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+/* ================= STAT FARGER ================= */
+
+/* Kamper – rød */
+.plan-stats .stat:nth-child(1) .stat-num {
+  color: #ff4d4d;
+}
+
+/* Mål – gul */
+.plan-stats .stat:nth-child(2) .stat-num {
+  color: #ffd42a;
+}
+
+/* Assist – blå (beholdt) */
+.plan-stats .stat:nth-child(3) .stat-num {
+  color: #4aa3ff;
+}
+/* ================= FORSLAG TIL ØVELSE ================= */
+
+.plan-exercise {
+  margin-top: 18px;
+  background: linear-gradient(
+    180deg,
+    rgba(32, 22, 48, 0.95),
+    rgba(18, 12, 28, 0.95)
+  );
+  border-radius: 12px;
+  padding: 14px 16px;
+  border: 1px solid rgba(180, 120, 240, 0.55);
+  box-shadow: inset 0 0 0 1px rgba(180, 120, 240, 0.15);
+}
+
+.plan-exercise-title {
+  font-size: 0.75rem;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  color: #cfa8ff;
+}
+
+.plan-exercise-text {
+  font-size: 0.95rem;
+  color: #e6d9ff;
+  line-height: 1.4;
+}
+/* ================= ØVELSE-LINJE (fys3/tek3/tak3) ================= */
+
+/* ================= ØVELSE-LINJE (uten ramme) ================= */
+
+.exercise-line {
+  margin-top: 6px;
+  padding-left: 2px;
+
+  color: #cfa8ff;
+  font-size: 0.95rem;
+  line-height: 1.3;
+}
+
+.exercise-label {
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  font-size: 0.72rem;
+  opacity: 0.85;
+  margin-right: 6px;
+}
+
+/* litt mindre luft mellom liste og øvelselinja */
+.plan-list {
+  margin-bottom: 6px;
+}

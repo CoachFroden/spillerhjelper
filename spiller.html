@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Min utviklingsplan</title>
+
+  <link rel="stylesheet" href="spiller.css">
+</head>
+<body>
+
+  <!-- INNHOLD (skjult til riktig passord) -->
+  <main id="plan-page" class="plan-page">
+
+    <header class="plan-header">
+      <div class="plan-avatar">
+        <div class="avatar-fallback">👤</div>
+      </div>
+      <div>
+        <div class="plan-name" id="player-name">Navn</div>
+        <div class="plan-sub" id="player-sub"># • Posisjon</div>
+      </div>
+    </header>
+
+    <section class="plan-card">
+      <div class="plan-card-top">
+        <div class="plan-card-title">Utviklingsplan</div>
+        <div class="plan-updated" id="plan-updated">Oppdatert: –</div>
+      </div>
+
+      <div id="plan-content">
+        Laster utviklingsplan…
+      </div>
+    </section>
+
+    <section class="plan-stats">
+      <div class="stat">
+        <div class="stat-num" id="stat-games">0</div>
+        <div class="stat-label">Kamper</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" id="stat-goals">0</div>
+        <div class="stat-label">Mål</div>
+      </div>
+    </section>
+<button class="close-btn" id="closeBtn">Tilbake</button>
+
+  </main>
+
+  <script type="module" src="spiller.js"></script>
+
+</body>
+</html>
