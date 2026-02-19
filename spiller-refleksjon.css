@@ -1,6 +1,5 @@
 /* Fjern iOS standard styling */
 select,
-input[type="radio"],
 button {
   -webkit-appearance: none;
   appearance: none;
@@ -410,4 +409,309 @@ select {
   border-radius: 8px;
   padding: 12px;
   width: 100%;
+}
+.score-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.score-buttons button {
+  flex: 1;
+  background: #1e293b;
+  border: 2px solid #334155;
+  border-radius: 12px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 12px 0;
+}
+
+.score-buttons button.active {
+  background: linear-gradient(135deg, #22c55e, #15803d);
+  border-color: #22c55e;
+  box-shadow: 0 0 15px rgba(34,197,94,0.6);
+}
+.choice-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.choice-buttons button {
+  flex: 1;
+  background: #1e293b;
+  border: 2px solid #334155;
+  border-radius: 12px;
+  padding: 12px 0;
+  font-weight: 600;
+  transition: all 0.15s ease;
+}
+
+.choice-buttons button.active {
+  background: linear-gradient(135deg, #38bdf8, #2563eb);
+  border-color: #38bdf8;
+  box-shadow: 0 0 15px rgba(56,189,248,0.6);
+}
+.mode-toggle {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.mode-toggle button {
+  flex: 1;
+  background: #1e293b;
+  border: 2px solid #334155;
+  border-radius: 14px;
+  padding: 14px 0;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.mode-toggle button.active {
+  background: linear-gradient(135deg, #facc15, #f59e0b);
+  border-color: #facc15;
+  box-shadow: 0 0 18px rgba(250,204,21,0.6);
+}
+.main-title {
+  text-align: center;
+  font-size: 1.8rem;
+  letter-spacing: 1px;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+  color: #facc15;
+  text-shadow: 0 0 15px rgba(250,204,21,0.6);
+}
+.section-title {
+  margin-top: 25px;
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+  text-align: center;
+  letter-spacing: 0.5px;
+  color: #38bdf8;
+  text-transform: uppercase;
+  position: relative;
+}
+
+.section-title::after {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 2px;
+  margin: 8px auto 0;
+  background: linear-gradient(90deg, #38bdf8, #22c55e);
+  border-radius: 2px;
+}
+.choice-buttons,
+.score-buttons {
+  margin-bottom: 30px;
+}
+
+textarea {
+  margin-top: 10px;
+  margin-bottom: 25px;
+}
+
+#trainingFields,
+#matchFields {
+  margin-top: 30px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(56,189,248,0.2);
+}
+.mission-block {
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: 18px;
+  background: rgba(15,23,42,0.7);
+  border: 1px solid rgba(56,189,248,0.2);
+  transition: all 0.2s ease;
+}
+
+.mission-block:hover {
+  border-color: rgba(56,189,248,0.6);
+  box-shadow: 0 0 20px rgba(56,189,248,0.3);
+}
+
+.mission-title {
+  text-align: center;
+  margin-bottom: 15px;
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+  color: #38bdf8;
+}
+.submit-btn {
+  width: 100%;
+  margin-top: 30px;
+  padding: 16px 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #22c55e, #15803d);
+  border: none;
+  color: white;
+  transition: all 0.15s ease;
+}
+
+.submit-btn:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 20px rgba(34,197,94,0.6);
+}
+
+.submit-btn:active {
+  transform: scale(0.98);
+}
+.section-title {
+  margin-top: 25px;
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+  text-align: center;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #38bdf8;
+  position: relative;
+}
+
+.section-title::after {
+  content: "";
+  display: block;
+  width: 50px;
+  height: 2px;
+  margin: 10px auto 0;
+  background: linear-gradient(90deg, #38bdf8, #22c55e);
+  border-radius: 2px;
+}
+
+.choice-buttons,
+.score-buttons {
+  margin-bottom: 35px;
+}
+#trainingFields,
+#matchFields {
+  margin-top: 50px;
+  padding-top: 25px;
+  border-top: 1px solid rgba(56,189,248,0.25);
+}
+.mission-sub {
+  text-align: center;
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+  color: rgba(255,255,255,0.6);
+}
+.season-title {
+  font-size: 1.4rem;
+  letter-spacing: 1px;
+  color: #facc15;
+  text-transform: uppercase;
+  margin-bottom: 15px;
+}
+.pill {
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  letter-spacing: 0.5px;
+  background: rgba(56,189,248,0.1);
+  border: 1px solid rgba(56,189,248,0.3);
+}
+
+#seasonBadge {
+  font-weight: 600;
+}
+
+#seasonBadge:contains("Satt") {
+  background: rgba(34,197,94,0.15);
+  border-color: rgba(34,197,94,0.6);
+}
+.season-card {
+  border: 1px solid rgba(250,204,21,0.2);
+  box-shadow: 0 0 25px rgba(250,204,21,0.1);
+}
+
+.season-card:hover {
+  border-color: rgba(250,204,21,0.6);
+  box-shadow: 0 0 35px rgba(250,204,21,0.3);
+}
+#seasonGoal {
+  font-size: 1rem;
+  font-weight: 500;
+}
+.season-card .secondary {
+  background: linear-gradient(135deg, #22c55e, #15803d);
+  border: none;
+  color: white;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 999px;
+  transition: all 0.15s ease;
+}
+
+.season-card .secondary:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 18px rgba(34,197,94,0.6);
+}
+.season-card .danger {
+  background: rgba(239,68,68,0.1);
+  border: 1px solid rgba(239,68,68,0.4);
+  color: #ef4444;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 999px;
+  transition: all 0.15s ease;
+}
+
+.season-card .danger:hover {
+  background: rgba(239,68,68,0.2);
+  box-shadow: 0 0 12px rgba(239,68,68,0.5);
+}
+/* 🔴 RØD */
+.choice-buttons button.low.active {
+  background: linear-gradient(135deg, #ef4444, #b91c1c);
+  border-color: #ef4444;
+  box-shadow: 0 0 18px rgba(239,68,68,0.6);
+}
+
+/* 🟡 GUL */
+.choice-buttons button.mid.active {
+  background: linear-gradient(135deg, #facc15, #eab308);
+  border-color: #facc15;
+  box-shadow: 0 0 18px rgba(250,204,21,0.6);
+}
+
+/* 🟢 GRØNN */
+.choice-buttons button.high.active {
+  background: linear-gradient(135deg, #22c55e, #15803d);
+  border-color: #22c55e;
+  box-shadow: 0 0 18px rgba(34,197,94,0.6);
+}
+.xp-wrapper {
+  margin-top: 30px;
+}
+
+.xp-bar-bg {
+  height: 12px;
+  background: #1e293b;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.xp-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #ef4444, #facc15, #22c55e);
+  transition: width 0.3s ease;
+}
+
+.xp-text {
+  text-align: center;
+  margin-top: 8px;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  color: rgba(255,255,255,0.7);
+}
+.submit-btn:disabled {
+  background: #1e293b;
+  color: rgba(255,255,255,0.4);
+  box-shadow: none;
+  cursor: not-allowed;
 }
