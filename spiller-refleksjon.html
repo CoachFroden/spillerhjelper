@@ -22,7 +22,7 @@
         <!-- SESONGFOKUS -->
         <div class="card season-card">
   <div class="card-top">
-    <h2>Mål for sesongen</h2>
+    <h2 class="season-title">🏆 Sesongmål</h2>
 
     <div class="card-actions">
   <div id="loggedInUser" class="logged-in-user" hidden>
@@ -38,7 +38,7 @@
             <span class="pill" id="seasonUpdated">—</span>
           </div>
 
-          <label for="seasonGoal">Mitt viktigste mål denne sesongen</label>
+          <label for="seasonGoal">Ditt viktigste mål denne sesongen</label>
           <input id="seasonGoal" type="text" maxlength="120" />
 
           <div class="btns">
@@ -51,68 +51,111 @@
 
         <!-- UKEREFLEKSJON -->
         <div class="card">
-          <h2>Ukerefleksjon</h2>
+          <h2 class="main-title">Ukerefleksjon</h2>
 		  
-		  <div class="reflection-type">
-  <label>Hva reflekterer du over?</label><br>
-
-  <label>
-    <input type="radio" name="reflectionType" value="training" checked>
-    Trening
-  </label>
-
-  <label style="margin-left: 15px;">
-    <input type="radio" name="reflectionType" value="match">
-    Kamp
-  </label>
+<div class="mode-toggle">
+  <button type="button" data-value="training" class="active">⚽ Trening</button>
+  <button type="button" data-value="match">🏆 Kamp</button>
 </div>
 
+<input type="hidden" id="reflectionType" name="reflectionType" value="training">
+
+
           <form id="weeklyForm">
-            <label for="effort">1) Innsats denne uka</label>
-            <select id="effort" required>
-              <option value="" disabled selected>Velg</option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </select>
+            <h3 class="section-title">Innsats</h3>
+			  <p class="mission-sub">Hva synest du om egen innsats denne uka?</p>
+            <div class="score-buttons" id="effortButtons">
+  <button type="button" data-value="1">1</button>
+  <button type="button" data-value="2">2</button>
+  <button type="button" data-value="3">3</button>
+  <button type="button" data-value="4">4</button>
+  <button type="button" data-value="5">5</button>
+</div>
+<input type="hidden" id="effort" required>
 
-            <label for="energy">2) Energi</label>
-            <select id="energy" required>
-              <option value="" disabled selected>Velg</option>
-              <option value="Lav">Lav</option>
-              <option value="Middels">Middels</option>
-              <option value="Høy">Høy</option>
-            </select>
 
-            <label for="workedOnSeasonGoal">3) Jobbet med sesongmål</label>
-            <select id="workedOnSeasonGoal" required>
-              <option value="" disabled selected>Velg</option>
-              <option value="Ja">Ja</option>
-              <option value="Litt">Litt</option>
-              <option value="Nei">Nei</option>
-            </select>
+            <h3 class="section-title">Energi</h3>
+			  <p class="mission-sub">Hvordan var energien din denne uka?</p>
+            <div class="choice-buttons" id="energyButtons">
+  <button type="button" data-value="Lav">Lav</button>
+  <button type="button" data-value="Middels">Middels</button>
+  <button type="button" data-value="Høy">Høy</button>
+</div>
+<input type="hidden" id="energy" required>
 
-            <label for="goodThing" id="goodThingLabel">Fornøyd med</label>
-            <textarea id="goodThing"></textarea>
 
-            <label for="improveThing" id="improveThingLabel">Neste uke</label>
-            <textarea id="improveThing"></textarea>
+            <h3 class="section-title">Sesongmål</h3>
+			  <p class="mission-sub">Fikk du jobbet med sesongmålet ditt?</p>
+            <div class="choice-buttons" id="seasonGoalButtons">
+  <button type="button" data-value="Ja">Ja</button>
+  <button type="button" data-value="Litt">Litt</button>
+  <button type="button" data-value="Nei">Nei</button>
+</div>
+<input type="hidden" id="workedOnSeasonGoal" required>
 
-            <label for="coachNote">Til trener</label>
-            <textarea id="coachNote"></textarea>
 
-            <div class="btns">
-              <button type="submit">Send inn</button>
-              <button id="resetWeeklyBtn" class="secondary" type="button">Tøm</button>
-            </div>
+            <!-- TRENING FELTER -->
+<div id="trainingFields">
+  <div class="mission-block">
+  <h3 class="mission-title">🔥 Hva gjorde du bra denne uka?</h3>
+  <textarea id="goodThing"></textarea>
+</div>
+
+  <div class="mission-block">
+  <h3 class="mission-title">🎯 Hva vil du forbedre neste uke?</h3>
+  <textarea id="improveThing"></textarea>
+</div>
+
+  <label for="coachNote">Til trener</label>
+  <textarea id="coachNote"></textarea>
+</div>
+
+<!-- KAMP FELTER -->
+<div id="matchFields" hidden>
+
+  <div class="mission-block">
+  <h3 class="section-title">Situasjon</h3>
+  <p class="mission-sub">Hvilken situasjon husker du best?</p>
+  <textarea id="matchSituation"></textarea>
+</div>
+
+
+  <div class="mission-block">
+  <h3 class="section-title">Fornøyd med</h3>
+  <p class="mission-sub">Hva gjorde du bra?</p>
+  <textarea id="matchGood"></textarea>
+</div>
+
+
+  <div class="mission-block">
+  <h3 class="section-title">Neste kamp</h3>
+  <p class="mission-sub">Vil du gjøre noe annerledes neste kamp?</p>
+  <textarea id="matchImprove"></textarea>
+</div>
+
+
+</div>
+
+
 			
 			<section class="card">
   <h2>Mine tidligere refleksjoner</h2>
   <select id="weekSelector"></select>
   <div id="historyList"></div>
 </section>
+
+<div class="xp-wrapper">
+  <div class="xp-bar-bg">
+    <div class="xp-bar-fill" id="xpBar"></div>
+  </div>
+  <div class="xp-text" id="xpText">0% Complete</div>
+</div>
+
+
+<button type="submit" class="submit-btn" id="submitBtn" disabled>
+  🚀 Send refleksjon
+</button>
+
 
 
             <div class="status" id="weeklyStatus"></div>
