@@ -5,6 +5,7 @@ import {
   collection,
   getDocs,
   query,
+  where,
   orderBy
 } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 
@@ -16,44 +17,46 @@ const list = document.getElementById("fbList");
 
 onAuthStateChanged(auth, async (user) => {
 
-  console.log("Auth state changed:", user);
-
   if (!user) {
     window.location.href = "login.html";
     return;
   }
 
-  const q = query(
-    collection(db, "refleksjoner", user.uid, "entries"),
-    orderBy("week", "desc")
-  );
+  try {
 
-  const snap = await getDocs(q);
-  console.log("Antall docs:", snap.size);
+    const q = query(
+      collection(db, "feedback"),
+      where("playerId", "==", user.uid),
+      where("status", "==", "sent"),
+      orderBy("updatedAt", "desc")
+    );
 
-  const entries = snap.docs
-    .map(d => ({ id: d.id, ...d.data() }))
-    .filter(e => e.coachFeedback);
+    const snap = await getDocs(q);
 
-  if (entries.length === 0) {
-    list.innerHTML = "Ingen tilbakemeldinger ennå.";
-    return;
+    if (snap.empty) {
+      list.innerHTML = "Ingen tilbakemeldinger ennå.";
+      return;
+    }
+
+    const entries = snap.docs.map(d => d.data());
+
+    list.innerHTML = entries.map(e => {
+
+      const text = e.editedText?.trim()
+        ? e.editedText
+        : e.generatedText;
+
+      return `
+        <div class="fb-entry">
+          <p>${text}</p>
+        </div>
+      `;
+
+    }).join("");
+
+  } catch (err) {
+    console.error(err);
+    list.innerHTML = "Feil ved henting av tilbakemeldinger.";
   }
 
-  list.innerHTML = entries.map(e => `
-    <div class="fb-entry">
-      <h3>Uke ${e.week}</h3>
-      <small>${e.dateNor || ""}</small>
-      <p>${e.coachFeedback}</p>
-    </div>
-  `).join("");
-
 });
-
-const backBtn = document.getElementById("backBtn");
-
-if (backBtn) {
-  backBtn.addEventListener("click", () => {
-    window.location.href = "minside.html";
-  });
-}
