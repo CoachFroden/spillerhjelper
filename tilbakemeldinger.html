@@ -16,10 +16,21 @@
         <h1>Tilbakemeldinger</h1>
         <p>Her ser du tilbakemeldinger fra trener.</p>
       </header>
+	  
 <div class="week-select-wrap">
-  <label for="weekSelect">Velg uke</label>
-  <select id="weekSelect">
-    <option value="">Alle uker</option>
+  <label for="feedbackType">Velg type</label>
+  <select id="feedbackType">
+    <option value="">Velg type</option>
+    <option value="weekly">Uke</option>
+    <option value="monthly">Måned</option>
+    <option value="season">Sesong</option>
+  </select>
+</div>
+
+<div class="week-select-wrap" id="filterWrap" style="display:none;">
+  <label id="filterLabel">Velg</label>
+  <select id="filterSelect">
+    <option value="">Velg</option>
   </select>
 </div>
 

@@ -80,7 +80,9 @@ body {
   margin-bottom: 6px;
 }
 
-#weekSelect {
+#weekSelect,
+#feedbackType,
+#filterSelect {
   width: 100%;
   max-width: 200px;
 
