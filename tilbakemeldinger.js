@@ -50,6 +50,8 @@ onAuthStateChanged(auth, async (user) => {
       option.textContent = "Uke " + w;
       weekSelect.appendChild(option);
     });
+	
+	list.innerHTML = "Velg en uke for å lese tilbakemeldingen.";
 
     function renderFeedback(selectedWeek = "") {
 
@@ -71,8 +73,6 @@ onAuthStateChanged(auth, async (user) => {
 
       }).join("");
     }
-
-    renderFeedback();
 
     weekSelect.addEventListener("change", () => {
       renderFeedback(weekSelect.value);
