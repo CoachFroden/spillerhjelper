@@ -317,7 +317,7 @@ if (selectedType === "match") {
     document.getElementById("matchImprove").value;
 }
 
-const entryId = `${year}_${week}_${daySelect.value}_${selectedType}`;
+const entryId = `${year}_${week}_${dayInput.value}_${selectedType}`;
 
 await setDoc(
   doc(db, "refleksjoner", user.uid, "entries", entryId),
