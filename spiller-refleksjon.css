@@ -27,12 +27,16 @@ body {
   background: linear-gradient(180deg, var(--bg1), var(--bg2));
   color: var(--text);
   min-height: 100vh;
+
+  -webkit-overflow-scrolling: touch; /* 📱 smooth scroll iOS */
 }
 
 .container {
   max-width: 720px;
   margin: 0 auto;
-  padding: 24px 18px 44px;
+  padding: 24px 18px 80px;
+
+  min-height: 100dvh; /* 📱 fyller mobilskjermen */
 }
 
 .header h1{
@@ -243,7 +247,7 @@ textarea {
 
 .grid {
   display: grid;
-  gap: 14px;
+  gap: 18px;
   margin-top: 18px;
 }
 
@@ -1014,4 +1018,12 @@ textarea {
   box-shadow:
     0 0 14px rgba(56,189,248,0.45),
     0 0 35px rgba(56,189,248,0.25);
+}
+
+/* Hindre iPhone Safari zoom på input */
+
+input,
+textarea,
+select {
+  font-size: 16px !important;
 }
