@@ -14,44 +14,22 @@
 
     <div id="appBox" hidden>
       <header class="header">
+	   <button class="back-btn" onclick="goBack()">← Tilbake</button>
+
         <h1>Refleksjon</h1>
-        <p class="intro">Her kan du fylle ut hva du synest om ukas trening.</p>
+        <p class="intro">Her kan du fylle ut hva du synest om ukas treninger og kamp.</p>
       </header>
 
       <section class="grid">
-        <!-- SESONGFOKUS -->
-        <div class="card season-card">
-  <div class="card-top">
-    <h2 class="season-title">🏆 Sesongmål</h2>
+	  
+	  <!-- UKEREFLEKSJON -->
+<div class="card reflection-card">
 
-    <div class="card-actions">
-  <div id="loggedInUser" class="logged-in-user" hidden>
-    👤 <span id="loggedInUserName"></span>
-  </div>
-</div>
-	<button class="back-btn" onclick="goBack()">← Tilbake</button>
-  </div>
+<h2 class="reflection-title" id="reflectionToggle">
+  ⚽ Ukerefleksjon <span id="reflectionArrow">▾</span>
+</h2>
 
-
-          <div class="inline">
-            <span class="pill" id="seasonBadge">Ikke satt</span>
-            <span class="pill" id="seasonUpdated">—</span>
-          </div>
-
-          <label for="seasonGoal">Ditt viktigste mål denne sesongen</label>
-          <input id="seasonGoal" type="text" maxlength="120" />
-
-          <div class="btns">
-            <button id="saveSeasonBtn" class="secondary">Lagre mål</button>
-            <button id="clearSeasonBtn" class="danger" type="button">Slett mål</button>
-          </div>
-
-          <div class="status" id="seasonStatus"></div>
-        </div>
-
-        <!-- UKEREFLEKSJON -->
-        <div class="card">
-          <h2 class="main-title">Ukerefleksjon</h2>
+  <div id="reflectionContent">
 		  
 <div class="mode-toggle">
   <button type="button" data-value="training" class="active">⚽ Trening</button>
@@ -170,16 +148,7 @@
   <textarea id="matchImprove"></textarea>
 </div>
 
-
 </div>
-
-
-			
-			<section class="card">
-  <h2>Mine tidligere refleksjoner</h2>
-  <select id="weekSelector"></select>
-  <div id="historyList"></div>
-</section>
 
 <div class="xp-wrapper">
   <div class="xp-bar-bg">
@@ -193,15 +162,60 @@
   🚀 Send refleksjon
 </button>
 
-
-
             <div class="status" id="weeklyStatus"></div>
           </form>
 		  <div id="reflectionSaved" hidden>
   <h2>🔥 Refleksjon lagret!</h2>
   <p>Bra jobbet.</p>
 </div>
+</div>
         </div>
+       
+<section class="card history-section">
+
+  <h2 class="history-title" id="historyToggle">
+    📜 Mine tidligere refleksjoner ▾
+  </h2>
+
+  <div id="historyContent">
+
+    <select id="weekSelector"></select>
+    <div id="historyList"></div>
+
+  </div>
+
+</section>
+ <!-- SESONGFOKUS -->
+        <div class="card season-card">
+  <div class="card-top">
+    <h2 class="season-title" id="seasonToggle">🎯 Mål for sesongen ▾</h2>
+
+    <div class="card-actions">
+  <div id="loggedInUser" class="logged-in-user" hidden>
+    👤 <span id="loggedInUserName"></span>
+  </div>
+</div>
+
+  </div>
+
+<div id="seasonContent">
+          <div class="inline">
+            <span class="pill" id="seasonBadge">Ikke satt</span>
+            <span class="pill" id="seasonUpdated">—</span>
+          </div>
+
+          <label for="seasonGoal">Ditt viktigste mål denne sesongen</label>
+          <input id="seasonGoal" type="text" maxlength="120" />
+
+          <div class="btns">
+            <button id="saveSeasonBtn" class="secondary">Lagre mål</button>
+            <button id="clearSeasonBtn" class="danger" type="button">Slett mål</button>
+          </div>
+
+          <div class="status" id="seasonStatus"></div>
+        </div>
+	  </div>
+        
       </section>
     </div>
 

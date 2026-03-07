@@ -93,10 +93,21 @@ reflectionData.forEach((entry, index) => {
   const option = document.createElement("option");
   option.value = index;
 
-  const typeText = entry.type === "match" ? "Kamp" : "Trening";
-  const dayText = entry.day || "";
+const typeText = entry.type === "match" ? "Kamp" : "Trening";
 
-  option.textContent = `${typeText} (${dayText})`;
+const dayMap = {
+  Mon: "Mandag",
+  Tue: "Tirsdag",
+  Wed: "Onsdag",
+  Thu: "Torsdag",
+  Fri: "Fredag",
+  Sat: "Lørdag",
+  Sun: "Søndag"
+};
+
+const dayText = dayMap[entry.day] || "";
+
+option.textContent = `${typeText} - ${dayText}`;
 
   selector.appendChild(option);
 
@@ -612,6 +623,125 @@ document.querySelectorAll(".mode-toggle button").forEach(btn => {
   btn.addEventListener("click", checkReflectionReady);
 });
 
+const seasonToggle = document.getElementById("seasonToggle");
+const seasonContent = document.getElementById("seasonContent");
+
+function closeAllSections(){
+
+  seasonContent.style.display = "none";
+  historyContent.style.display = "none";
+  reflectionContent.style.display = "none";
+
+  seasonToggle.textContent = "🎯 Mål for sesongen ▾";
+  historyToggle.textContent = "📜 Mine tidligere refleksjoner ▾";
+
+  const reflectionArrow = document.getElementById("reflectionArrow");
+  if(reflectionArrow){
+    reflectionArrow.textContent = "▾";
+  }
+
+}
+
+seasonToggle.addEventListener("click", () => {
+
+  const isOpen = seasonContent.style.display === "block";
+
+  closeAllSections();
+
+  if(!isOpen){
+    seasonContent.style.display = "block";
+    seasonToggle.textContent = "🎯 Mål for sesongen ▴";
+  }
+
+});
+
+const historyToggle = document.getElementById("historyToggle");
+const historyContent = document.getElementById("historyContent");
+
+historyToggle.addEventListener("click", () => {
+
+  const isOpen = historyContent.style.display === "block";
+
+  closeAllSections();
+
+  if(!isOpen){
+    historyContent.style.display = "block";
+    historyToggle.textContent = "📜 Mine tidligere refleksjoner ▴";
+  }
+
+});
+
+const reflectionToggle = document.getElementById("reflectionToggle");
+const reflectionContent = document.getElementById("reflectionContent");
+
+const reflectionArrow = document.getElementById("reflectionArrow");
+
+reflectionToggle.addEventListener("click", () => {
+
+  const isOpen = reflectionContent.style.display === "block";
+
+  closeAllSections();
+
+  if(!isOpen){
+    reflectionContent.style.display = "block";
+    reflectionArrow.textContent = "▴";
+  } else {
+    reflectionArrow.textContent = "▾";
+  }
+
+});
+
+function applyWaveEffect(){
+
+  const title = document.getElementById("reflectionToggle");
+  const arrow = document.getElementById("reflectionArrow");
+
+  if(!title || !arrow) return;
+
+  // hent bare teksten før pilen
+  const text = title.childNodes[0].textContent;
+
+  const waveContainer = document.createElement("span");
+
+  [...text].forEach((letter,index)=>{
+
+    const span = document.createElement("span");
+
+    span.classList.add("wave-letter");
+    span.style.animationDelay = `${index * 0.08}s`;
+
+    span.textContent = letter;
+
+    waveContainer.appendChild(span);
+
+  });
+
+  // tøm og bygg opp igjen
+  title.innerHTML = "";
+  title.appendChild(waveContainer);
+  title.appendChild(arrow);
+
+}
+
+applyWaveEffect();
+
+document.addEventListener("click", (event) => {
+
+  const reflectionCard = document.querySelector(".reflection-card");
+  const historyCard = document.querySelector(".history-section");
+  const seasonCard = document.querySelector(".season-card");
+
+  if (
+    reflectionCard.contains(event.target) ||
+    historyCard.contains(event.target) ||
+    seasonCard.contains(event.target)
+  ) {
+    return;
+  }
+
+  closeAllSections();
+
+});
 
 // ==============================
 // TILBAKE KNAPP
