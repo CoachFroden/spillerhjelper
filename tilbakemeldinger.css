@@ -1,111 +1,258 @@
-body {
-  margin: 0;
+/* =========================
+   BASE
+========================= */
+
+body{
+  margin:0;
   font-family: system-ui, -apple-system, sans-serif;
-  background: radial-gradient(circle at top, #0f172a, #070c16);
-  color: #e5e7eb;
-}
 
-.fb-container {
-  max-width: 900px;
-  margin: 40px auto;
-  padding: 0 20px;
-}
-
-.fb-card {
-  background: #0f172a;
-  border-radius: 20px;
-  padding: 30px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-}
-
-.fb-header h1 {
-  margin: 0 0 6px;
-}
-
-.fb-header p {
-  color: #94a3b8;
-  margin-bottom: 30px;
-}
-
-.fb-entry {
-  background: linear-gradient(145deg, #111827, #0b1220);
-  padding: 18px 22px;
-  border-radius: 14px;
-  margin-bottom: 18px;
-  border: 1px solid rgba(255,255,255,0.06);
-}
-
-.fb-entry h3 {
-  margin: 0 0 6px;
-  color: #facc15;
-}
-
-.fb-entry small {
-  display: block;
-  margin-bottom: 10px;
-  color: #94a3b8;
-}
-
-.fb-entry p {
-  margin: 0;
-  line-height: 1.6;
-}
-.back-btn {
-  background: none;
-  border: none;
-  color: #9bbcff;
-  font-size: 14px;
-  cursor: pointer;
-  margin-bottom: 15px;
-  padding: 0;
-}
-
-.back-btn:hover {
-  text-decoration: underline;
-  color: #ffffff;
+  background: radial-gradient(circle at top,#0f172a,#070c16);
+  color:#e5e7eb;
 }
 
 /* =========================
-   UKEVELGER
+   LAYOUT
 ========================= */
 
-.week-select-wrap {
-  margin-bottom: 20px;
+.fb-container{
+
+  max-width:700px;
+  margin:auto;
+
+  padding:20px 16px 40px;
+
 }
 
-.week-select-wrap label {
-  display: block;
-  font-size: 0.9rem;
-  color: #94a3b8;
-  margin-bottom: 6px;
+.fb-card{
+
+  background:#0f172a;
+
+  border-radius:20px;
+
+  padding:22px 18px;
+
+  box-shadow:0 20px 40px rgba(0,0,0,.5);
+
 }
 
-#weekSelect,
-#feedbackType,
-#filterSelect {
-  width: 100%;
-  max-width: 200px;
+/* =========================
+   HEADER
+========================= */
 
-  padding: 8px 12px;
-  border-radius: 8px;
+.fb-header h1{
 
-  background: #0b1220;
-  color: #e5e7eb;
+  margin:0 0 4px;
 
-  border: 1px solid rgba(255,255,255,0.08);
+  font-size:1.4rem;
 
-  font-size: 0.95rem;
-  cursor: pointer;
-
-  transition: border 0.2s ease, box-shadow 0.2s ease;
 }
 
-#weekSelect:hover {
-  border-color: #60a5fa;
+.fb-header p{
+
+  margin:0 0 20px;
+
+  color:#94a3b8;
+  font-size:.9rem;
+
 }
 
-#weekSelect:focus {
-  outline: none;
-  border-color: #60a5fa;
-  box-shadow: 0 0 0 2px rgba(96,165,250,0.25);
+/* =========================
+   BACK BUTTON
+========================= */
+
+.back-btn{
+
+  background:none;
+  border:none;
+
+  color:#9bbcff;
+
+  font-size:.9rem;
+
+  cursor:pointer;
+
+  margin-bottom:12px;
+
+}
+
+.back-btn:hover{
+
+  color:white;
+
+}
+
+/* =========================
+   FEEDBACK FEED
+========================= */
+
+.feedback-feed{
+
+  margin-top:10px;
+
+}
+
+/* =========================
+   FEEDBACK CARD
+========================= */
+
+.feedback-card{
+
+  background:linear-gradient(160deg,#111827,#0b1220);
+
+  border-radius:16px;
+
+  padding:16px 16px;
+
+  margin-bottom:10px;
+
+  border:1px solid rgba(255,255,255,.06);
+
+  border-left:4px solid #3b82f6;
+
+  cursor:pointer;
+
+  transition:all .15s ease;
+
+}
+
+.feedback-card:hover{
+
+  transform:scale(1.01);
+
+  border-color:#3b82f6;
+
+}
+
+/* =========================
+   TITLE
+========================= */
+
+.feedback-title{
+
+  font-weight:600;
+
+  font-size:1rem;
+
+  display:flex;
+  align-items:center;
+  gap:8px;
+
+  color:#facc15;
+
+}
+
+/* =========================
+   PREVIEW
+========================= */
+
+.feedback-preview{
+
+  margin-top:6px;
+
+  font-size:.95rem;
+
+  line-height:1.4;
+
+  color:#e5e7eb;
+
+}
+
+/* =========================
+   FULL TEXT
+========================= */
+
+.feedback-full{
+
+  display:none;
+
+  margin-top:10px;
+
+  line-height:1.5;
+
+}
+
+.feedback-card.open .feedback-full{
+
+  display:block;
+
+}
+
+/* =========================
+   MOBILE IMPROVEMENTS
+========================= */
+
+@media (max-width:600px){
+
+  .fb-container{
+
+    padding:16px 14px 30px;
+
+  }
+
+  .feedback-card{
+
+    padding:14px 14px;
+	border-left:4px solid #3b82f6;
+
+  }
+
+}
+
+.feedback-hint{
+
+  font-size:.8rem;
+
+  color:#60a5fa;
+
+  margin-top:6px;
+
+  opacity:.8;
+
+}
+
+.feedback-card.open .feedback-hint{
+
+  display:none;
+
+}
+
+.feedback-row{
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+}
+
+.feedback-arrow{
+
+  font-size:1.2rem;
+  color:#64748b;
+
+}
+
+.feedback-full{
+
+  display:none;
+
+  margin-top:10px;
+
+  line-height:1.5;
+
+}
+
+.feedback-card.open .feedback-full{
+
+  display:block;
+
+}
+
+.feedback-sub{
+
+  font-size:.8rem;
+
+  color:#94a3b8;
+
+  margin-top:2px;
+
 }
