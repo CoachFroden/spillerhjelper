@@ -1,5 +1,9 @@
 "use strict";
 
+import { auth, db } from "./firebase-refleksjon.js";
+import { doc, getDoc, collection, query, where, getDocs } 
+from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+
 /* ================= FIREBASE CONFIG ================= */
 
 const firebaseConfig = {
@@ -12,24 +16,30 @@ const firebaseConfig = {
   measurementId: "G-EJL3YYC63R"
 };
 
-firebase.initializeApp(firebaseConfig);
-
-const auth = firebase.auth();
-const db = firebase.firestore();
-
 /* ================= AUTH CHECK ================= */
 
-auth.onAuthStateChanged(async (user) => {
+import { onAuthStateChanged } 
+from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+
+function getWeekNumber(date = new Date()) {
+  const firstJan = new Date(date.getFullYear(), 0, 1);
+  const days = Math.floor((date - firstJan) / (24 * 60 * 60 * 1000));
+  return Math.ceil((days + firstJan.getDay() + 1) / 7);
+}
+
+onAuthStateChanged(auth, async (user) => {
   if (!user) {
     window.location.href = "index.html";
     return;
   }
 
   // Finn spiller koblet til uid
-  const snap = await db
-    .collection("spillere")
-    .where("uid", "==", user.uid)
-    .get();
+const q = query(
+  collection(db, "spillere"),
+  where("uid", "==", user.uid)
+);
+
+const snap = await getDocs(q);
 
   if (snap.empty) {
     alert("Fant ingen spiller koblet til brukeren.");
@@ -48,11 +58,9 @@ auth.onAuthStateChanged(async (user) => {
 /* ================= SJEKK TILBAKEMELDINGER ================= */
 
 async function checkForFeedback(uid) {
-  const snapshot = await db
-    .collection("refleksjoner")
-    .doc(uid)
-    .collection("entries")
-    .get();
+const snapshot = await getDocs(
+  collection(db, "refleksjoner", uid, "entries")
+);
 
   let hasFeedback = false;
 
@@ -69,6 +77,33 @@ async function checkForFeedback(uid) {
     badge.classList.remove("hidden");
   }
 }
+
+async function loadWeeklyExercises(){
+
+  const weekNumber = getWeekNumber();
+  const ref = doc(db, "weeklyExercises", "week"+weekNumber);
+  const snap = await getDoc(ref);
+
+  if(!snap.exists()) return;
+
+  const data = snap.data();
+
+  const focusEl = document.getElementById("weeklyFocus");
+  const card = document.getElementById("weeklyFocusCard");
+
+  if (focusEl) {
+    focusEl.textContent = data.focus;
+  }
+
+  if (card) {
+    card.onclick = () => {
+      window.location.href = "ovelser.html";
+    };
+  }
+
+}
+
+loadWeeklyExercises();
 
 /* ================= NAVIGASJON ================= */
 

@@ -253,3 +253,7 @@ body {
 .hidden {
   display: none;
 }
+
+.menu-btn.focus {
+  border-left: 4px solid #ff7a18;
+}
