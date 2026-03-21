@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Toppliste</title>
+<link rel="stylesheet" href="game.css">
+</head>
+
+<body>
+
+<div class="app">
+
+<h2 style="text-align:center;">🏆 Toppliste</h2>
+
+<div class="leaderboardToggle">
+  <button id="monthBtn" class="active">Måned</button>
+  <button id="seasonBtn">Sesong</button>
+</div>
+
+<div id="leaderboard"></div>
+
+<nav class="bottomNav">
+
+  <div class="navItem" data-type="game" onclick="location.href='game.html'">⚽</div>
+
+  <div class="navItem active" data-type="stats" onclick="location.href='stats.html'">⭐</div>
+
+  <div class="navItem" data-type="achievements" onclick="location.href='achievements.html'">🏆</div>
+
+  <div class="navItem" data-type="profile" onclick="location.href='minside.html'">👤</div>
+
+  <div class="navItem" data-type="info" onclick="openInfo()">ℹ️</div>
+
+</nav>
+
+</div>
+<div id="infoModal" class="exerciseModal">
+
+  <div class="exerciseBox">
+
+<div class="exerciseHeader">
+      ℹ️ Hvordan fungerer appen
+    </div>
+
+    <p>🎯 Gjør øvelser for å tjene XP og utvikle deg</p>
+
+<p>⭐ Når du når 100 XP fyller du sirkelen og får en ⭐</p>
+
+<p>⏱️ Du kan fylle <b>1 sirkel per dag</b></p>
+
+<p>📈 Du kan fortsatt tjene XP etterpå og øke level</p>
+
+<p>🔥 Spill hver dag for å bygge streak</p>
+
+<hr>
+
+<p>🏆 <b>Månedspremier:</b><br></p>
+<p>Spilleren med flest ⭐ i løpet av måneden vinner en premie 🎁</p>
+
+<p>🔥 <b>Streak-premie:</b><br>
+Spilleren med lengst streak vinner en premie 🎁</p>
+
+<p>🤝 <b>Lagmål:</b><br></p>
+<p>Hvis laget sammen når målet for antall ⭐, får hele laget en belønning ⚽</p>
+
+<hr>
+
+<p>🥇 <b>Sesongpremier:</b><br></p>
+<p>Ved sesongslutt vinner spillere premie for:</p>
+
+<p>• Høyest level 📈<br>
+• Lengst streak 🔥<br>
+• Flest ⭐</p>
+
+<hr>
+
+<p>🔒 <b>Variasjon er viktig:</b><br></p>
+<p>Gjør du samme kategori 4 ganger, blir den midlertidig låst.</p>
+
+<p>🔓 For å låse opp må du gjøre 2 andre kategorier.</p>
+
+<p>💡 Tips: Bytt mellom øvelser for å utvikle deg raskere.</p>
+
+    <button onclick="closeInfo()" class="closeModal">
+      Lukk
+    </button>
+
+  </div>
+
+</div>
+
+<script type="module" src="stats.js"></script>
+</body>
+</html>

@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fotball XP</title>
+<link rel="stylesheet" href="game.css">
+</head>
+
+<body>
+
+<div class="app">
+<div id="xpPopup"></div>
+
+<header class="topBar">
+
+<div class="player">
+
+<div class="levelBadge">
+  <span class="lvl">LVL</span>
+  <span class="lvlNumber" id="levelBadgeText">4</span>
+</div>
+
+<div>
+<div class="name" id="playerName">Spiller</div>
+
+<div class="levelProgress">
+<span id="xpCurrent">0</span> XP til neste level
+</div>
+</div>
+
+</div>
+
+<div class="totalXP">
+<div class="xpLabel">XP</div>
+<span id="monthXP">0</span>
+</div>
+
+</header>
+
+<section class="wheelSection">
+
+  <div class="wheelWrap">
+
+<div class="wheel">
+
+<svg class="xpWheel" viewBox="0 0 220 220" width="220" height="220">
+
+<defs>
+<linearGradient id="xpGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+<stop offset="0%" stop-color="#ffe600"/>
+<stop offset="50%" stop-color="#ff9c00"/>
+<stop offset="100%" stop-color="#ff3b30"/>
+</linearGradient>
+</defs>
+
+<g id="segments"></g>
+
+<text x="110" y="118" text-anchor="middle" fill="white" font-size="18" font-weight="700">
+XP <tspan id="dailyXP">0</tspan>/100
+</text>
+
+</svg>
+
+</div>
+
+    <button class="startBtn" id="startBtn">
+      ▶ Start øvelse
+    </button>
+
+  </div>
+  
+  <div id="completeMessage"></div>
+
+ <div id="bonusBox" class="bonusBox"></div>
+
+</section>
+
+<div class="teamGoal">
+
+<div class="teamGoalTitle">
+🏆 Lagmål
+</div>
+
+<div class="teamGoalProgress">
+⭐ <span id="teamWheels">0</span> / 250
+</div>
+
+<div class="teamBar">
+<div id="teamBarFill"></div>
+</div>
+
+</div>
+
+
+<section class="stats">
+
+<div class="statCard">
+<div class="statLabel">TOTAL</div>
+<img src="star.png" class="statIcon">
+<div id="starsText">0</div>
+</div>
+
+<div class="statCard">
+<div class="statLabel">MÅNED</div>
+<img src="wheel.png" class="statIcon">
+<div id="monthlyWheelsText">0</div>
+</div>
+
+<div class="statCard">
+<div class="statLabel">STREAK</div>
+<img src="streak.png" class="statIcon">
+<div id="streakText">0</div>
+</div>
+
+<div class="statCard">
+<div class="statLabel">REKORD</div>
+<img src="record.png" class="statIcon">
+<div id="longestStreakText">0</div>
+</div>
+
+</section>
+
+<nav class="bottomNav">
+
+  <div class="navItem active" data-type="game" onclick="location.href='game.html'">⚽</div>
+
+  <div class="navItem" data-type="stats" onclick="location.href='stats.html'">⭐</div>
+
+  <div class="navItem" data-type="achievements" onclick="location.href='achievements.html'">🏆</div>
+
+  <div class="navItem" data-type="profile" onclick="location.href='minside.html'">👤</div>
+
+  <div class="navItem" data-type="info" onclick="openInfo()">ℹ️</div>
+
+</nav>
+
+</div>
+
+<!-- ØVELSES MODAL -->
+
+<div id="exerciseModal" class="exerciseModal">
+
+<div class="exerciseBox">
+
+<div class="exerciseHeader">
+Velg øvelse
+</div>
+
+<!-- PASNING -->
+
+<div class="exerciseCategory">
+
+<div class="categoryHeader" data-category="pasning">
+Pasning
+</div>
+
+<div class="exerciseList">
+
+  <!-- PASNING -->
+
+  <button class="exerciseBtn" data-xp="10">
+    50 pasninger høyre fot (vegg) (+10 XP)
+  </button>
+
+  <button class="exerciseBtn" data-xp="10">
+    50 pasninger venstre fot (vegg) (+10 XP)
+  </button>
+
+  <button class="exerciseBtn" data-xp="20">
+    100 pasninger høyre fot (vegg) (+20 XP)
+  </button>
+
+  <button class="exerciseBtn" data-xp="20">
+    100 pasninger venstre fot (vegg) (+20 XP)
+  </button>
+
+  <!-- FØRSTE TOUCH -->
+
+  <button class="exerciseBtn" data-xp="15">
+    Første touch høyre → høyre (+15 XP)
+  </button>
+
+  <button class="exerciseBtn" data-xp="15">
+    Første touch høyre → venstre (+15 XP)
+  </button>
+
+  <button class="exerciseBtn" data-xp="15">
+    Første touch venstre → høyre (+15 XP)
+  </button>
+
+  <button class="exerciseBtn" data-xp="15">
+    Første touch venstre → venstre (+15 XP)
+  </button>
+
+</div>
+
+</div>
+
+
+<!-- TRIKSING -->
+
+<div class="exerciseCategory">
+
+<div class="categoryHeader" data-category="triksing">
+Triksing
+</div>
+
+<div class="exerciseList">
+
+<button class="exerciseBtn" data-xp="10">
+50 triks høyre fot (+10 XP)
+</button>
+
+<button class="exerciseBtn" data-xp="10">
+50 triks venstre fot (+10 XP)
+</button>
+
+<button class="exerciseBtn" data-xp="20">
+100 triks valgfri fot (+20 XP)
+</button>
+
+<button class="exerciseBtn" data-xp="15">
+150 triks valgfri fot (+30 XP)
+</button>
+
+</div>
+
+</div>
+
+<div class="exerciseCategory">
+
+  <div class="categoryHeader" data-category="teknikk">
+    Teknikk
+  </div>
+
+  <div class="exerciseList">
+  
+  
+  <!-- SLALOM -->
+
+  <button class="exerciseBtn" data-xp="10">
+    Slalom mellom kjegler (5 runder) (+10 XP)
+  </button>
+
+  <button class="exerciseBtn" data-xp="15">
+    Slalom høy fart (10 runder) (+15 XP)
+  </button>
+
+  <!-- VENDINGER -->
+
+  <button class="exerciseBtn" data-xp="10">
+    Cruyff vending (20 reps) (+10 XP)
+  </button>
+
+  <button class="exerciseBtn" data-xp="10">
+    Innside/utside vending (20 reps) (+10 XP)
+  </button>
+
+  <button class="exerciseBtn" data-xp="15">
+    Vending + akselerasjon (15 reps) (+15 XP)
+  </button>
+
+  <!-- FINTER -->
+
+  <button class="exerciseBtn" data-xp="10">
+    Oversteg (20 reps) (+10 XP)
+  </button>
+
+  <button class="exerciseBtn" data-xp="15">
+    Dobbel oversteg (20 reps) (+15 XP)
+  </button>
+
+  <button class="exerciseBtn" data-xp="15">
+    Kroppsfint + sprint (15 reps) (+15 XP)
+  </button>
+
+  <!-- BALLKONTROLL -->
+
+  <button class="exerciseBtn" data-xp="10">
+    Tå-touch (100 repetisjoner) (+10 XP)
+  </button>
+
+  <button class="exerciseBtn" data-xp="15">
+    Tå-touch + bevegelse (1 min) (+15 XP)
+  </button>
+
+  <button class="exerciseBtn" data-xp="20">
+    Ballkontroll uten å se ned (2 min) (+20 XP)
+  </button>
+
+</div>
+</div>
+
+
+<!-- HEADING -->
+
+<div class="exerciseCategory">
+
+<div class="categoryHeader" data-category="heading">
+Heading
+</div>
+
+<div class="exerciseList">
+
+<button class="exerciseBtn" data-xp="10">
+20 headinger mot vegg (+10 XP)
+</button>
+
+<button class="exerciseBtn" data-xp="15">
+30 headinger mot vegg (+15 XP)
+</button>
+
+<button class="exerciseBtn" data-xp="10">
+10 headinger hopp + heading (+10 XP)
+</button>
+
+<button class="exerciseBtn" data-xp="20">
+20 headinger med bevegelse (+20 XP)
+</button>
+
+</div>
+
+</div>
+
+
+<!-- STYRKE -->
+
+<div class="exerciseCategory">
+
+<div class="categoryHeader" data-category="styrke">
+Styrke
+</div>
+
+<div class="exerciseList">
+
+  <!-- OVERKROPP -->
+
+  <button class="exerciseBtn" data-xp="10">
+    20 pushups (+10 XP)
+  </button>
+
+  <button class="exerciseBtn" data-xp="15">
+    40 pushups (+15 XP)
+  </button>
+
+  <button class="exerciseBtn" data-xp="10">
+    20 dips (+10 XP)
+  </button>
+
+  <!-- KJERNE -->
+
+  <button class="exerciseBtn" data-xp="10">
+    40 situps (+10 XP)
+  </button>
+
+  <button class="exerciseBtn" data-xp="15">
+    60 situps (+15 XP)
+  </button>
+
+  <button class="exerciseBtn" data-xp="15">
+    60 sek planke (+15 XP)
+  </button>
+
+  <button class="exerciseBtn" data-xp="20">
+    90 sek planke (+20 XP)
+  </button>
+
+  <!-- BEIN -->
+
+  <button class="exerciseBtn" data-xp="10">
+    20 knebøy (+10 XP)
+  </button>
+
+  <button class="exerciseBtn" data-xp="15">
+    40 knebøy (+15 XP)
+  </button>
+
+  <button class="exerciseBtn" data-xp="15">
+    20 utfall per bein (+15 XP)
+  </button>
+
+  <button class="exerciseBtn" data-xp="20">
+    30 hoppknebøy (+20 XP)
+  </button>
+
+</div>
+
+</div>
+
+
+<!-- LØPING -->
+
+<div class="exerciseCategory">
+
+<div class="categoryHeader" data-category="løping">
+Løping
+</div>
+
+<div class="exerciseList">
+
+  <!-- JOGG -->
+
+  <button class="exerciseBtn" data-xp="10">
+    1 km jogg (+10 XP)
+  </button>
+
+  <button class="exerciseBtn" data-xp="30">
+    3 km jogg (+30 XP)
+  </button>
+
+  <button class="exerciseBtn" data-xp="50">
+    5 km jogg (+50 XP)
+  </button>
+
+  <!-- SPRINT -->
+
+  <button class="exerciseBtn" data-xp="10">
+    5 sprint á 20m (+10 XP)
+  </button>
+
+  <button class="exerciseBtn" data-xp="15">
+    10 sprint á 20m (+15 XP)
+  </button>
+
+  <button class="exerciseBtn" data-xp="20">
+    15 sprint á 20m (+20 XP)
+  </button>
+
+  <button class="exerciseBtn" data-xp="25">
+    10 sprint á 30m (+25 XP)
+  </button>
+
+  <button class="exerciseBtn" data-xp="30">
+    15 sprint á 30m (+30 XP)
+  </button>
+
+</div>
+
+</div>
+
+
+<button id="closeModal" class="closeModal">
+Lukk
+</button>
+
+</div>
+
+</div>
+
+<div id="levelUpAnimation" class="levelUpAnimation">
+  <div class="levelText">LEVEL UP</div>
+  <div class="levelNumber"></div>
+</div>
+
+<div id="bonusAnimation" class="bonusAnimation">
+  <div class="bonusText">BONUS</div>
+  <div class="bonusNumber"></div>
+</div>
+
+<div id="bonusPyro" class="pyro">
+  <div class="before"></div>
+  <div class="after"></div>
+</div>
+
+<canvas id="confettiCanvas"></canvas>
+<canvas id="fireworksCanvas"></canvas>
+
+<div id="infoModal" class="exerciseModal">
+
+  <div class="exerciseBox">
+
+    <div class="exerciseHeader">
+      ℹ️ Hvordan fungerer appen
+    </div>
+
+    <p>🎯 Gjør øvelser for å tjene XP og utvikle deg</p>
+
+<p>⭐ Når du når 100 XP fyller du sirkelen og får en stjerne</p>
+
+<p>⏱️ Du kan fylle <b>1 sirkel per dag</b></p>
+
+<p>📈 Du kan fortsatt tjene XP etterpå og øke level</p>
+
+<p>🔥 Spill hver dag for å bygge streak</p>
+
+<hr>
+
+<p>🏆 <b>Månedspremier:</b><br></p>
+<p>Spilleren med flest ⭐ i løpet av måneden vinner en premie 🎁</p>
+
+<p>🔥 <b>Streak-premie:</b><br>
+Spilleren med lengst streak vinner en premie 🎁</p>
+
+<p>🤝 <b>Lagmål:</b><br></p>
+<p>Hvis laget sammen når målet for antall ⭐, får hele laget en belønning ⚽</p>
+
+<hr>
+
+<p>🥇 <b>Sesongpremier:</b><br></p>
+<p>Ved sesongslutt vinner spillere premie for:</p>
+
+<p>• Høyest level 📈<br>
+• Lengst streak 🔥<br>
+• Flest ⭐</p>
+
+<hr>
+
+<p>🔒 <b>Variasjon er viktig:</b><br></p>
+<p>Gjør du samme kategori 4 ganger, blir den midlertidig låst.</p>
+
+<p>🔓 For å låse opp må du gjøre 2 andre kategorier.</p>
+
+<p>💡 Tips: Bytt mellom øvelser for å utvikle deg raskere.</p>
+
+    <button onclick="closeInfo()" class="closeModal">
+      Lukk
+    </button>
+
+  </div>
+
+</div>
+<div id="warningPopup" class="warningPopup"></div>
+<script type="module" src="game.js"></script></body>
+</html>

@@ -257,3 +257,8 @@ body {
 .menu-btn.focus {
   border-left: 4px solid #ff7a18;
 }
+
+.menu-btn.game{
+  border-left: 4px solid #ff4a4a; /* rød kant */
+  --pulse-color: rgba(255,74,74,0.45);
+}

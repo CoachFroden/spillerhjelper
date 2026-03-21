@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prestasjoner</title>
+<link rel="stylesheet" href="game.css">
+</head>
+
+<body>
+
+<div class="app">
+
+<h2 style="text-align:center;">🏅 Prestasjoner</h2>
+
+<div id="achievements"></div>
+
+<nav class="bottomNav">
+
+  <div class="navItem" data-type="game" onclick="location.href='game.html'">⚽</div>
+
+  <div class="navItem" data-type="stats" onclick="location.href='stats.html'">⭐</div>
+
+  <div class="navItem active" data-type="achievements" onclick="location.href='achievements.html'">🏆</div>
+
+  <div class="navItem" data-type="profile" onclick="location.href='minside.html'">👤</div>
+
+  <div class="navItem" data-type="info" onclick="openInfo()">ℹ️</div>
+
+</nav>
+
+</div>
+
+<!-- INFO MODAL -->
+<div id="infoModal" class="exerciseModal">
+  <div class="exerciseBox">
+    <div class="exerciseHeader">ℹ️ Info</div>
+    <p>Gjør øvelser → få XP → lås opp prestasjoner</p>
+    <button onclick="closeInfo()" class="closeModal">Lukk</button>
+  </div>
+</div>
+
+<script src="achievements.js"></script>
+</body>
+</html>
