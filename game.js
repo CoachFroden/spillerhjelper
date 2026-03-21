@@ -474,6 +474,11 @@ if(snap.exists()){
   document.querySelectorAll(".exerciseBtn").forEach(btn => {
     btn.classList.remove("done");
   });
+  
+  // 🔥 reset wheel visuelt
+segments.forEach(seg => {
+  seg.classList.remove("filled");
+});
 
 }
 
