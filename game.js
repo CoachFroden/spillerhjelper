@@ -1130,6 +1130,34 @@ document.querySelectorAll(".exerciseBtn").forEach(btn => {
       selectedExercise = btn;
       return;
     }
+	
+	const logsSnap = await getDocs(
+  query(
+    collection(db, "exerciseLogs"),
+    where("uid", "==", currentUser.uid)
+  )
+);
+
+// hent siste 10 øvelser
+const logs = logsSnap.docs
+  .map(doc => doc.data())
+  .sort((a, b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0));
+
+let countSinceLast = 0;
+let found = false;
+
+for(const log of logs){
+  if(log.exercise === name){
+    found = true;
+    break;
+  }
+  countSinceLast++;
+}
+
+if(found && countSinceLast < 5){
+  showWarning("Du må gjøre flere andre øvelser før du kan velge denne igjen");
+  return;
+}
 
     // 🔹 2. klikk → fullfør
 addXP(xp);
