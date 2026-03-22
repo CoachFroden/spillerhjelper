@@ -483,7 +483,12 @@ segments.forEach(seg => {
 }
 
 // 🔥 SYNC BACK TO FIRESTORE (fikser Ask)
+const playerName = await getPlayerName(user);
+
 await setDoc(doc(db, "gameStats", user.uid), {
+  uid: user.uid,
+  navn: playerName,
+
   stars: stars || 0,
   monthlyWheels: monthlyWheels || 0,
   streak: streak || 0,
