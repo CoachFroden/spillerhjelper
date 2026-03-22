@@ -1,80 +1,146 @@
 /* ===== RESET ===== */
-
 *{
-  box-sizing: border-box;
+  box-sizing:border-box;
   margin:0;
   padding:0;
 }
 
 /* ===== BODY ===== */
-
 body{
-  font-family: system-ui,-apple-system,Arial;
-  background:#061734;
+  font-family:system-ui,-apple-system,Arial;
+  background:url("stadium.png") center/cover no-repeat fixed;
   color:white;
+
+  min-height:100dvh;
 }
 
 /* ===== CONTAINER ===== */
-
 .container{
   width:100%;
-  max-width:600px;
-  margin:auto;
-  padding:220px 20px 20px 20px;
+  min-height:100dvh;
+
+  padding:80px 20px 30px;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+
   text-align:center;
 }
 
 /* ===== TITLES ===== */
-
 h1{
-  font-size:36px;
-  margin-bottom:20px;
+  font-size:32px;
+  font-weight:900;
+  margin-bottom:10px;
+  letter-spacing:0.5px;
 }
 
 h2{
-  font-size:18px;
-  margin-bottom:10px;
-    padding:20px 20px 20px 20px;
-
+  font-size:16px;
+  opacity:0.8;
+  margin-bottom:14px;
 }
 
 /* ===== SELECT ===== */
-
 select{
   width:100%;
-  padding:14px;
-  font-size:16px;
-  border-radius:10px;
+  max-width:420px;
+
+  padding:16px;
+  font-size:18px;
+
+  border-radius:12px;
   border:none;
+
   background:#1e2a40;
   color:white;
+
   margin-bottom:20px;
-}
 
-/* ===== VIDEO ===== */
-
-video{
-  width:100%;
-  border-radius:10px;
-  margin-top:15px;
+  box-shadow:0 6px 20px rgba(0,0,0,0.4);
 }
 
 /* ===== EXERCISE CARD ===== */
-
 .exercise-card{
+  width:100%;
+  max-width:420px;
+
   margin-top:20px;
+  padding:14px;
+
+  border-radius:14px;
+
+  background:rgba(0,0,0,0.45);
+  backdrop-filter:blur(6px);
+
+  box-shadow:0 10px 25px rgba(0,0,0,0.5);
+}
+
+.exercise-title{
+  font-size:18px;
+  font-weight:700;
+  margin-bottom:10px;
+}
+
+/* ===== VIDEO ===== */
+video{
+  width:100%;
+  border-radius:10px;
+  margin-top:10px;
 }
 
 /* ===== BUTTON ===== */
-
 button{
   width:100%;
+  max-width:420px;
+
   margin-top:25px;
-  padding:14px;
-  font-size:16px;
+  padding:16px;
+
+  font-size:18px;
+  font-weight:700;
+
   border:none;
-  border-radius:10px;
-  background:#ff4d4d;
+  border-radius:12px;
+
+  background:linear-gradient(
+    180deg,
+    #ff5a5a,
+    #ff3b3b
+  );
+
   color:white;
   cursor:pointer;
+
+  box-shadow:0 8px 20px rgba(0,0,0,0.5);
+
+  transition:all 0.2s ease;
+}
+
+button:active{
+  transform:scale(0.96);
+}
+
+/* ===== NO EXERCISES ===== */
+.no-exercises{
+  margin-top:20px;
+  padding:20px;
+
+  background:rgba(0,0,0,0.4);
+  border-radius:14px;
+
+  font-size:16px;
+}
+
+/* ===== SMALL SCREENS ===== */
+@media (max-width:380px){
+  h1{
+    font-size:28px;
+  }
+
+  select,
+  button{
+    font-size:16px;
+  }
 }
