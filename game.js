@@ -279,8 +279,8 @@ async function addXP(xp){
 
   const freshSnap = await getDoc(doc(db, "gameStats", user.uid));
   
-  if(!freshSnap.exists()){
-  console.log("SERVER TOM → RESET ALT");
+if(!freshSnap.exists()){
+  console.log("SERVER TOM → FULL RESET");
 
   dailyXP = 0;
   monthXP = 0;
@@ -293,6 +293,13 @@ async function addXP(xp){
   completedExercises = {};
 
   totalExercises = 0;
+
+  // 🔥 LEGG TIL DISSE
+  stars = 0;
+  monthlyWheels = 0;
+  streak = 0;
+  longestStreak = 0;
+  lastWheelDate = "";
 }
 
   if(freshSnap.exists()){
