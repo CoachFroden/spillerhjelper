@@ -449,6 +449,31 @@ if(nameEl){
 
 const docRef = doc(db, "gameStats", user.uid);
 const snap = await getDoc(docRef);
+if(!snap.exists()){
+  console.log("LOAD → SERVER TOM → RESET");
+
+  dailyXP = 0;
+  monthXP = 0;
+  seasonXP = 0;
+  totalXP = 0;
+
+  categoryCounts = {};
+  recentCategories = [];
+  lockIndex = {};
+  completedExercises = {};
+
+  totalExercises = 0;
+
+  stars = 0;
+  monthlyWheels = 0;
+  streak = 0;
+  longestStreak = 0;
+  lastWheelDate = "";
+
+  updateUI();
+  updateCategoryUI();
+  return;
+}
 const playerResetVersion = snap.data()?.resetVersion || 0;
 
 if(snap.exists()){
