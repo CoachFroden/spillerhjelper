@@ -300,6 +300,9 @@ if(!freshSnap.exists()){
   streak = 0;
   longestStreak = 0;
   lastWheelDate = "";
+  
+    updateUI();
+  updateCategoryUI();
 }
 
   if(freshSnap.exists()){
