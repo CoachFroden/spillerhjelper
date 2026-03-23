@@ -329,6 +329,7 @@ async function addXP(xp){
     lockIndex
   }, { merge: true });
 
+await loadTeamWheels();
   updateUI();
   return true;
 
