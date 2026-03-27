@@ -1,108 +1,109 @@
+import { auth, db } from "./firebase-refleksjon.js";
+import { doc, getDoc } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+
 const container = document.getElementById("achievements");
 
-// hent fra localStorage (samme som appen din)
-const starsCount = Number(localStorage.getItem("stars")) || 0;
-const streakCount = Number(localStorage.getItem("streak")) || 0;
-const totalExercisesCount = Number(localStorage.getItem("totalExercises")) || 0;
-const monthlyWheels = Number(localStorage.getItem("monthlyWheels")) || 0;
-
-const achievements = [
-
-  {
-    name: "Første stjerne",
-    icon: "⭐",
-    current: starsCount,
-    target: 1
-  },
-
-  {
-    name: "5 dager aktiv",
-    icon: "⭐",
-    current: monthlyWheels,
-    target: 5
-  },
-  {
-    name: "10 dager aktiv",
-    icon: "⭐",
-    current: monthlyWheels,
-    target: 10
-  },
-  {
-    name: "20 dager aktiv",
-    icon: "⭐",
-    current: monthlyWheels,
-    target: 20
-  },
-  {
-    name: "30 dager aktiv",
-    icon: "⭐",
-    current: monthlyWheels,
-    target: 30
-  },
-
-  {
-    name: "3 dager på rad",
-    icon: "🔥",
-    current: streakCount,
-    target: 3
-  },
-  {
-    name: "7 dager på rad",
-    icon: "🔥",
-    current: streakCount,
-    target: 7
-  },
-  {
-    name: "14 dager på rad",
-    icon: "🔥",
-    current: streakCount,
-    target: 14
-  },
-  {
-    name: "30 dager på rad",
-    icon: "🔥",
-    current: streakCount,
-    target: 30
-  },
-
-  {
-    name: "10 øvelser",
-    icon: "⚽",
-    current: totalExercisesCount,
-    target: 10
-  },
-  {
-    name: "50 øvelser",
-    icon: "⚽",
-    current: totalExercisesCount,
-    target: 50
-  },
-  {
-    name: "100 øvelser",
-    icon: "⚽",
-    current: totalExercisesCount,
-    target: 100
-  },
-  {
-    name: "250 øvelser",
-    icon: "⚽",
-    current: totalExercisesCount,
-    target: 250
-  },
-  {
-    name: "500 øvelser",
-    icon: "⚽",
-    current: totalExercisesCount,
-    target: 500
-  }
-
-];
-
-render();
+let starsCount = 0;
+let streakCount = 0;
+let totalExercisesCount = 0;
+let monthlyWheels = 0;
 
 function render(){
 
   container.innerHTML = "";
+
+  const achievements = [
+
+    {
+      name: "Første stjerne",
+      icon: "⭐",
+      current: starsCount,
+      target: 1
+    },
+
+    {
+      name: "5 dager aktiv",
+      icon: "⭐",
+      current: monthlyWheels,
+      target: 5
+    },
+    {
+      name: "10 dager aktiv",
+      icon: "⭐",
+      current: monthlyWheels,
+      target: 10
+    },
+    {
+      name: "20 dager aktiv",
+      icon: "⭐",
+      current: monthlyWheels,
+      target: 20
+    },
+    {
+      name: "30 dager aktiv",
+      icon: "⭐",
+      current: monthlyWheels,
+      target: 30
+    },
+
+    {
+      name: "3 dager på rad",
+      icon: "🔥",
+      current: streakCount,
+      target: 3
+    },
+    {
+      name: "7 dager på rad",
+      icon: "🔥",
+      current: streakCount,
+      target: 7
+    },
+    {
+      name: "14 dager på rad",
+      icon: "🔥",
+      current: streakCount,
+      target: 14
+    },
+    {
+      name: "30 dager på rad",
+      icon: "🔥",
+      current: streakCount,
+      target: 30
+    },
+
+    {
+      name: "10 øvelser",
+      icon: "⚽",
+      current: totalExercisesCount,
+      target: 10
+    },
+    {
+      name: "50 øvelser",
+      icon: "⚽",
+      current: totalExercisesCount,
+      target: 50
+    },
+    {
+      name: "100 øvelser",
+      icon: "⚽",
+      current: totalExercisesCount,
+      target: 100
+    },
+    {
+      name: "250 øvelser",
+      icon: "⚽",
+      current: totalExercisesCount,
+      target: 250
+    },
+    {
+      name: "500 øvelser",
+      icon: "⚽",
+      current: totalExercisesCount,
+      target: 500
+    }
+
+  ];
 
   achievements.forEach(a => {
 
@@ -130,10 +131,22 @@ function render(){
 
     container.appendChild(div);
   });
-
 }
 
-window.addEventListener("storage", () => {
+onAuthStateChanged(auth, async (user) => {
+  if(!user) return;
+
+  const snap = await getDoc(doc(db, "gameStats", user.uid));
+
+  if(snap.exists()){
+    const data = snap.data();
+
+    starsCount = data.stars || 0;
+    streakCount = data.streak || 0;
+    totalExercisesCount = data.totalExercises || 0;
+    monthlyWheels = data.monthlyWheels || 0;
+  }
+
   render();
 });
 
