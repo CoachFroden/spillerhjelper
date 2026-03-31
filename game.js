@@ -81,7 +81,7 @@ function isCategoryLocked(category){
 
   const index = lockIndex[category];
 
-  if(index === undefined) return true;
+  if(index === undefined) return false;
 
   const afterLock = recentCategories.slice(index + 1);
 
@@ -319,6 +319,18 @@ else {
   lockIndex = serverData.lockIndex || {};
   completedExercises = serverData.completedExercises || {};
 
+// 🔥 HARD RESET AV UGYLDIGE KATEGORIER
+Object.keys(completedExercises).forEach(cat => {
+
+  const count = categoryCounts[cat] || 0;
+
+  // 👉 hvis category ikke er låst → skal den IKKE ha done
+  if(count < 4){
+    delete completedExercises[cat];
+  }
+
+});
+
   stars = serverData.stars || 0;
   monthlyWheels = serverData.monthlyWheels || 0;
   streak = serverData.streak || 0;
@@ -469,16 +481,21 @@ if(nameEl){
 const docRef = doc(db, "gameStats", user.uid);
 const snap = await getDoc(docRef);
 
-const playerResetVersion = snap.data()?.resetVersion || 0;
+const playerResetVersion = snap.data()?.resetVersion;
 
 if(snap.exists()){
 	
 	// 🔥 RESET hvis versjon er forskjellig
-if(playerResetVersion !== teamResetVersion){
+if(playerResetVersion === undefined){
+
+  // 🔥 første gang → IKKE reset
+  await setDoc(doc(db, "gameStats", user.uid), {
+    resetVersion: teamResetVersion
+  }, { merge: true });
+
+} else if(playerResetVersion < teamResetVersion){
 
   console.log("RESET TRIGGET");
-
-  localStorage.clear();
 
   categoryCounts = {};
   recentCategories = [];
@@ -514,7 +531,6 @@ if(playerResetVersion !== teamResetVersion){
 
   }, { merge: true });
 
-  // 🔥 STOPP HER – ikke kall funksjonen på nytt
   return;
 }
 
@@ -1244,6 +1260,30 @@ await setDoc(doc(collection(db, "exerciseLogs")), {
 categoryCounts[category] = (categoryCounts[category] || 0) + 1;
 recentCategories.push(category);
 
+// 🔓 FORCE unlock + lagre MED EN GANG
+
+Object.keys(lockIndex).forEach(cat => {
+
+  if(!isCategoryLocked(cat)){
+
+    delete lockIndex[cat];
+    delete completedExercises[cat];
+    categoryCounts[cat] = 0;
+
+  }
+
+});
+
+// 🔥 TVING LAGRING NÅ (ikke vent på senere)
+if(user){
+  await setDoc(doc(db, "gameStats", user.uid), {
+    categoryCounts,
+    recentCategories,
+    lockIndex,
+    completedExercises
+  }, { merge: true });
+}
+
 if(!completedExercises[category]){
   completedExercises[category] = [];
 }
@@ -1327,19 +1367,6 @@ function updateCategoryUI(){
     let locked = isCategoryLocked(category);
     const wasLocked = lastLockState[category] ?? false;
 
-    // 🔓 UNLOCK → reset alt
-if(wasLocked === true && !locked){
-
-  // 🔥 reset kategori
-  categoryCounts[category] = 0;
-  delete lockIndex[category];
-  delete completedExercises[category];
-
-  // 🔥 lagre
-
-  locked = false;
-}
-
     // 🔢 LAG PRIKKER
     const count = categoryCounts[category] || 0;
 
@@ -1370,20 +1397,17 @@ document.querySelectorAll(".exerciseList").forEach(list => {
   const category = header.dataset.category;
 
   const count = categoryCounts[category] || 0;
-
   const buttons = list.querySelectorAll(".exerciseBtn");
 
-buttons.forEach((btn) => {
+  buttons.forEach((btn, index) => {
 
-  const name = btn.textContent.trim();
+    if(index < count){
+      btn.classList.add("done");
+    } else {
+      btn.classList.remove("done");
+    }
 
-  if(completedExercises[category]?.includes(name)){
-    btn.classList.add("done");
-  } else {
-    btn.classList.remove("done");
-  }
-
-});
+  });
 
 });
   });
@@ -1439,10 +1463,10 @@ let lastUserId = null;
 
 onAuthStateChanged(auth, async (user) => {
   if(user){
-	  playerName = await getPlayerName(user);
+    playerName = await getPlayerName(user);
 
     if(lastUserId && lastUserId !== user.uid){
-      resetLocalData(); // 🔥 NY
+      // tom – ingen reset her
     }
 
     lastUserId = user.uid;
