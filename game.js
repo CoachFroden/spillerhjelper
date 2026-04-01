@@ -50,10 +50,10 @@ const today = getTodayKey();
 
 // lockIndex finnes allerede fra steg 1
 
-let completedExercises = {};
 let categoryCounts = {};
 let recentCategories = [];
 let lockIndex = {};
+let doneExercises = {};
 let xpModeTimeout = null;
 let xpMode = "month";
 let teamWheels = 0;
@@ -69,6 +69,8 @@ let totalXP = 0;
 let seasonXP = 0;
 let streak = 0;
 let longestStreak = 0;
+let seasonStreak = 0;
+let seasonLongestStreak = 0;
 let lastPlayDate = "";
 let lastWheelDate = "";
 let doubleXPActive = false;
@@ -293,19 +295,19 @@ await setDoc(doc(db, "gameStats", user.uid), {
   uid: user.uid,
   navn: playerName,
 
-  dailyXP: 0,
-  monthXP: 0,
-  seasonXP: 0,
-  totalXP: 0,
+  monthXP,
+  seasonXP,
+  totalXP,
+  dailyXP,
 
-  totalExercises: 0,
-  categoryCounts: {},
-  recentCategories: [],
-  lockIndex: {},
-  completedExercises: {},
+  totalExercises,
+  categoryCounts,
+  recentCategories,
+  lockIndex,
+  doneExercises, // 🔥 DENNE MANGLER
 
-  resetVersion: teamResetVersion // 🔥 DENNE ER HELE POENGET
-});
+  lastPlayDate: today
+}, { merge: true });
 
   return await addXP(xp);
 }
@@ -320,7 +322,7 @@ else {
   categoryCounts = serverData.categoryCounts || {};
   recentCategories = serverData.recentCategories || [];
   lockIndex = serverData.lockIndex || {};
-  completedExercises = serverData.completedExercises || {};
+  doneExercises = serverData.doneExercises || {};
 
   stars = serverData.stars || 0;
   monthlyWheels = serverData.monthlyWheels || 0;
@@ -354,13 +356,15 @@ async function savePlayerData(user){
     monthlyWheels,
     streak,
     longestStreak,
+    seasonStreak,            // 🔥 NY
+    seasonLongestStreak,     // 🔥 NY
     lastWheelDate,
 
     totalExercises,
     categoryCounts,
     recentCategories,
     lockIndex,
-    completedExercises,
+	doneExercises,
 
     lastPlayDate: today
 
@@ -491,7 +495,7 @@ if(playerResetVersion === undefined){
   categoryCounts = {};
   recentCategories = [];
   lockIndex = {};
-  completedExercises = {};
+  doneExercises = {};
 
   dailyXP = 0;
   stars = 0;
@@ -510,7 +514,6 @@ if(playerResetVersion === undefined){
     categoryCounts: {},
     recentCategories: [],
     lockIndex: {},
-    completedExercises: {},
 
     stars: 0,
     monthlyWheels: 0,
@@ -533,16 +536,18 @@ if(playerResetVersion === undefined){
   monthlyWheels = data.monthlyWheels || 0;
   streak = data.streak || 0;
   longestStreak = data.longestStreak || 0;
+  seasonStreak = data.seasonStreak || 0;
+  seasonLongestStreak = data.seasonLongestStreak || 0;
   totalExercises = data.totalExercises || 0;
   categoryCounts = data.categoryCounts || {};
   recentCategories = data.recentCategories || [];
   lockIndex = data.lockIndex || {};
+  doneExercises = data.doneExercises || {};
   monthXP = data.monthXP || 0;
   dailyXP = data.dailyXP || 0;
   seasonXP = data.seasonXP || 0;
   totalXP = data.totalXP || 0;
   lastLevel = calculateLevel(seasonXP);
-  completedExercises = data.completedExercises || {};
   lastWheelDate = data.lastWheelDate || "";
   
   console.log("dailyXP etter tildeling:", dailyXP);
@@ -575,22 +580,23 @@ if(
 
   // 🔥 ALT må nulles
   dailyXP = 0;
-  monthXP = 0;
-  seasonXP = 0;
+  monthXP = 0; 
   totalXP = 0;
-
-  stars = 0;
   monthlyWheels = 0;
-
+  
+  seasonXP = 0;
+  stars = 0;
   streak = 0;
   longestStreak = 0;
-
+  seasonStreak = 0;           // 🔥 NY
+  seasonLongestStreak = 0;    // 🔥 NY
+  
   totalExercises = 0;
 
   categoryCounts = {};
   recentCategories = [];
   lockIndex = {};
-  completedExercises = {};
+  doneExercises = {};
 
   lastWheelDate = "";
 
@@ -1115,8 +1121,7 @@ btn.addEventListener("click", async () => {
 
     const xp = Number(btn.dataset.xp);
     const name = btn.textContent.trim();
-	
-	if(completedExercises[category]?.includes(name)){
+	if(doneExercises[category]?.includes(name)){
   showWarning("Du har allerede gjort denne øvelsen");
   return;
 }
@@ -1211,11 +1216,17 @@ if(beforeXP < goal && afterXP >= goal){
       const todayDateObj = parseDateKey(today);
       const diff = daysBetween(todayDateObj, lastDate);
 
-      if(diff === 1){
-        streak++;
-      } else {
-        streak = 1;
-      }
+if(diff === 1){
+  streak++;
+  seasonStreak++;     // 🔥 NY
+} else {
+  streak = 1;
+  seasonStreak = 1;   // 🔥 NY
+}
+
+if(seasonStreak > seasonLongestStreak){
+  seasonLongestStreak = seasonStreak;
+}
     }
 
     lastWheelDate = today;
@@ -1225,13 +1236,15 @@ if(beforeXP < goal && afterXP >= goal){
     }
   }
 
-  await setDoc(doc(db, "gameStats", user.uid), {
-    stars,
-    monthlyWheels,
-    streak,
-    longestStreak,
-    lastWheelDate
-  }, { merge: true });
+await setDoc(doc(db, "gameStats", user.uid), {
+  stars,
+  monthlyWheels,
+  streak,
+  longestStreak,
+  seasonStreak,           // 🔥 NY
+  seasonLongestStreak,    // 🔥 NY
+  lastWheelDate
+}, { merge: true });
 
   updateCompleteMessage(firstCompletionToday);
   await loadTeamWheels();
@@ -1248,30 +1261,45 @@ await setDoc(doc(collection(db, "exerciseLogs")), {
 });
 }
 
-categoryCounts[category] = (categoryCounts[category] || 0) + 1;
+categoryCounts[category] = Math.min(
+  (categoryCounts[category] || 0) + 1,
+  4
+);
 recentCategories.push(category);
+
+if(!doneExercises[category]){
+  doneExercises[category] = [];
+}
+
+doneExercises[category].push(name);
 
 // 🔓 FORCE unlock + lagre MED EN GANG
 
-Object.keys(lockIndex).forEach(cat => {
+for(const cat of Object.keys(lockIndex)){
 
   if(!isCategoryLocked(cat)){
 
     delete lockIndex[cat];
-    delete completedExercises[cat];
+
+    // 🔥 RESET ALT
     categoryCounts[cat] = 0;
 
+    if(doneExercises[cat]){
+      doneExercises[cat] = [];
+    }
+
+    // UI reset
+    document
+      .querySelectorAll(`.categoryHeader[data-category="${cat}"] + .exerciseList .exerciseBtn`)
+      .forEach(btn => btn.classList.remove("done"));
   }
-
-});
-
-if(!completedExercises[category]){
-  completedExercises[category] = [];
 }
 
-if(!completedExercises[category].includes(name)){
-  completedExercises[category].push(name);
-}
+await setDoc(doc(db, "gameStats", user.uid), {
+  doneExercises,
+  categoryCounts,
+  lockIndex
+}, { merge: true });
 
 // 🔥 først oppdatere lock
 if(categoryCounts[category] === 4){
@@ -1312,7 +1340,6 @@ updateUI();
 updateCategoryUI();
 updateCompleteMessage();
 
-
     btn.classList.remove("selected");
     selectedExercise = null;
 
@@ -1344,12 +1371,10 @@ function updateCategoryUI(){
   document.querySelectorAll(".categoryHeader").forEach(header => {
 
     const category = header.dataset.category;
-
-    let locked = isCategoryLocked(category);
-    const wasLocked = lastLockState[category] ?? false;
-
-    // 🔢 LAG PRIKKER
+    const locked = isCategoryLocked(category);
     const count = categoryCounts[category] || 0;
+    const list = header.nextElementSibling;
+    const buttons = list ? list.querySelectorAll(".exerciseBtn") : [];
 
     let dots = "";
     for(let i = 0; i < 4; i++){
@@ -1358,7 +1383,6 @@ function updateCategoryUI(){
 
     lastLockState[category] = locked;
 
-    // 🎨 RENDER UI
     header.innerHTML = `
       ${category.charAt(0).toUpperCase() + category.slice(1)}
       <span class="dots">${dots}</span>
@@ -1371,52 +1395,52 @@ function updateCategoryUI(){
       header.classList.remove("locked");
     }
 
-// 🔥 sync øvelser med count (DETTE MANGLER)
-document.querySelectorAll(".exerciseList").forEach(list => {
+buttons.forEach(btn => {
+  const name = btn.textContent.trim();
 
-  const header = list.previousElementSibling;
-  const category = header.dataset.category;
+  if(doneExercises[category]?.includes(name)){
+    btn.classList.add("done");
+  } else {
+    btn.classList.remove("done");
+  }
 
-  const count = categoryCounts[category] || 0;
-  const buttons = list.querySelectorAll(".exerciseBtn");
-
-  buttons.forEach((btn, index) => {
-
-    if(index < count){
-      btn.classList.add("done");
-    } else {
-      btn.classList.remove("done");
-    }
-
-  });
-
+  if(locked){
+    btn.classList.add("disabled");
+  } else {
+    btn.classList.remove("disabled");
+  }
 });
+
   });
+
 }
-
-
 
 document.querySelectorAll(".categoryHeader").forEach(header => {
 
-  header.addEventListener("click", () => {
+header.addEventListener("click", () => {
 
-    const list = header.nextElementSibling;
-    const isOpen = list.classList.contains("open");
+  const category = header.dataset.category;
 
-    // fjern active
-    document.querySelectorAll(".categoryHeader")
-      .forEach(h => h.classList.remove("active"));
+  if(isCategoryLocked(category)){
+    showWarning("🔒 Kategorien er låst");
+    return;
+  }
 
-    // lukk alle
-    document.querySelectorAll(".exerciseList")
-      .forEach(l => l.classList.remove("open"));
+  const list = header.nextElementSibling;
+  const isOpen = list.classList.contains("open");
 
-    if(!isOpen){
-      list.classList.add("open");
-      header.classList.add("active");
-    }
+  document.querySelectorAll(".categoryHeader")
+    .forEach(h => h.classList.remove("active"));
 
-  });
+  document.querySelectorAll(".exerciseList")
+    .forEach(l => l.classList.remove("open"));
+
+  if(!isOpen){
+    list.classList.add("open");
+    header.classList.add("active");
+  }
+
+});
 
 });
 
