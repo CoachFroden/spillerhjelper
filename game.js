@@ -322,18 +322,6 @@ else {
   lockIndex = serverData.lockIndex || {};
   completedExercises = serverData.completedExercises || {};
 
-// 🔥 HARD RESET AV UGYLDIGE KATEGORIER
-Object.keys(completedExercises).forEach(cat => {
-
-  const count = categoryCounts[cat] || 0;
-
-  // 👉 hvis category ikke er låst → skal den IKKE ha done
-  if(count < 4){
-    delete completedExercises[cat];
-  }
-
-});
-
   stars = serverData.stars || 0;
   monthlyWheels = serverData.monthlyWheels || 0;
   streak = serverData.streak || 0;
@@ -1276,16 +1264,6 @@ Object.keys(lockIndex).forEach(cat => {
   }
 
 });
-
-// 🔥 TVING LAGRING NÅ (ikke vent på senere)
-if(user){
-  await setDoc(doc(db, "gameStats", user.uid), {
-    categoryCounts,
-    recentCategories,
-    lockIndex,
-    completedExercises
-  }, { merge: true });
-}
 
 if(!completedExercises[category]){
   completedExercises[category] = [];
