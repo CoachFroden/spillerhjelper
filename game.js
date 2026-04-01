@@ -1248,33 +1248,20 @@ await setDoc(doc(collection(db, "exerciseLogs")), {
 });
 }
 
+// 1. Oppdater counts
 categoryCounts[category] = (categoryCounts[category] || 0) + 1;
 recentCategories.push(category);
 
-// 🔓 FORCE unlock + lagre MED EN GANG
-
+// 2. RESET (unlock)
 Object.keys(lockIndex).forEach(cat => {
-
   if(!isCategoryLocked(cat)){
-
     delete lockIndex[cat];
     delete completedExercises[cat];
     categoryCounts[cat] = 0;
-
   }
-
 });
 
-// 🔥 TVING LAGRING NÅ (ikke vent på senere)
-if(user){
-  await setDoc(doc(db, "gameStats", user.uid), {
-    categoryCounts,
-    recentCategories,
-    lockIndex,
-    completedExercises
-  }, { merge: true });
-}
-
+// 3. LEGG TIL ØVELSE
 if(!completedExercises[category]){
   completedExercises[category] = [];
 }
@@ -1283,10 +1270,13 @@ if(!completedExercises[category].includes(name)){
   completedExercises[category].push(name);
 }
 
-// 🔥 først oppdatere lock
+// 4. SETT LOCK
 if(categoryCounts[category] === 4){
   lockIndex[category] = recentCategories.length - 1;
 }
+
+// 5. LAGRE (HELT TIL SLUTT)
+await savePlayerData(user);
 
 // 🔴 så UI
 updateCategoryUI();
