@@ -7,8 +7,7 @@ import {
   collection,
   query,
   where,
-  serverTimestamp,
-  deleteField
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 
 async function getPlayerName(user){
@@ -322,6 +321,18 @@ else {
   recentCategories = serverData.recentCategories || [];
   lockIndex = serverData.lockIndex || {};
   completedExercises = serverData.completedExercises || {};
+
+// 🔥 HARD RESET AV UGYLDIGE KATEGORIER
+Object.keys(completedExercises).forEach(cat => {
+
+  const count = categoryCounts[cat] || 0;
+
+  // 👉 hvis category ikke er låst → skal den IKKE ha done
+  if(count < 4){
+    delete completedExercises[cat];
+  }
+
+});
 
   stars = serverData.stars || 0;
   monthlyWheels = serverData.monthlyWheels || 0;
@@ -1188,6 +1199,10 @@ console.log("beforeXP:", beforeXP);
 console.log("afterXP:", afterXP);
 console.log("goal:", goal);
 
+updateUI();
+updateCategoryUI();
+updateCompleteMessage();
+
 showXPPopup(finalXP);
 
 if(beforeXP < goal && afterXP >= goal){
@@ -1245,22 +1260,33 @@ await setDoc(doc(collection(db, "exerciseLogs")), {
 });
 }
 
-// 1. Oppdater counts
 categoryCounts[category] = (categoryCounts[category] || 0) + 1;
 recentCategories.push(category);
 
-const unlockedCategories = [];
+// 🔓 FORCE unlock + lagre MED EN GANG
 
 Object.keys(lockIndex).forEach(cat => {
+
   if(!isCategoryLocked(cat)){
-    unlockedCategories.push(cat);
+
     delete lockIndex[cat];
     delete completedExercises[cat];
     categoryCounts[cat] = 0;
+
   }
+
 });
 
-// 3. LEGG TIL ØVELSE
+// 🔥 TVING LAGRING NÅ (ikke vent på senere)
+if(user){
+  await setDoc(doc(db, "gameStats", user.uid), {
+    categoryCounts,
+    recentCategories,
+    lockIndex,
+    completedExercises
+  }, { merge: true });
+}
+
 if(!completedExercises[category]){
   completedExercises[category] = [];
 }
@@ -1269,7 +1295,7 @@ if(!completedExercises[category].includes(name)){
   completedExercises[category].push(name);
 }
 
-// 4. SETT LOCK
+// 🔥 først oppdatere lock
 if(categoryCounts[category] === 4){
   lockIndex[category] = recentCategories.length - 1;
 }
@@ -1301,19 +1327,6 @@ updateCategoryUI();
 }
 	
 if(user){
-
-  if(unlockedCategories.length > 0){
-
-    const deletePayload = {};
-
-    unlockedCategories.forEach(cat => {
-      deletePayload[`completedExercises.${cat}`] = deleteField();
-      deletePayload[`lockIndex.${cat}`] = deleteField();
-    });
-
-    await setDoc(doc(db, "gameStats", user.uid), deletePayload, { merge: true });
-  }
-
   await savePlayerData(user);
 }
 
@@ -1389,17 +1402,15 @@ document.querySelectorAll(".exerciseList").forEach(list => {
   const count = categoryCounts[category] || 0;
   const buttons = list.querySelectorAll(".exerciseBtn");
 
-buttons.forEach(btn => {
+  buttons.forEach((btn, index) => {
 
-  const name = btn.textContent.trim();
+    if(index < count){
+      btn.classList.add("done");
+    } else {
+      btn.classList.remove("done");
+    }
 
-  if(completedExercises[category]?.includes(name)){
-    btn.classList.add("done");
-  } else {
-    btn.classList.remove("done");
-  }
-
-});
+  });
 
 });
   });
