@@ -74,12 +74,14 @@ coachNoteToggleBtn.addEventListener("click", () => {
 document.addEventListener("DOMContentLoaded", () => {
   const btn = document.querySelector('#type button[data-value="training"]');
   if (btn) btn.click();
-});
 
-const backBtn = document.getElementById("backBtn");
+  const backBtn = document.getElementById("backBtn");
 
-backBtn.addEventListener("click", () => {
-  window.location.href = "./minside.html";
+  if (backBtn) {
+    backBtn.addEventListener("click", () => {
+      window.location.href = "./minside.html";
+    });
+  }
 });
 
 function checkReady() {
