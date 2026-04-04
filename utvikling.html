@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Utvikling</title>
+
+  <link rel="stylesheet" href="minside.css"> <!-- du kan reuse style -->
+</head>
+<body>
+
+<main class="container">
+
+  <button id="backBtn" class="back-btn">← Tilbake</button>
+
+  <h1>📈 Utvikling</h1>
+
+  <section class="menu">
+
+    <button class="menu-btn reflection" onclick="goTo('spiller-refleksjon.html')">
+      📝<span>Spiller refleksjon</span>
+    </button>
+
+    <button class="menu-btn feedback" onclick="goTo('tilbakemeldinger.html')">
+      💬<span>Tilbakemeldinger</span>
+    </button>
+
+    <button class="menu-btn plan" onclick="goTo('utviklingsplan.html')">
+      🎯<span>Utviklingsplan</span>
+    </button>
+
+  </section>
+
+</main>
+
+<script>
+  function goTo(page) {
+    window.location.href = page;
+  }
+
+  document.getElementById("backBtn").onclick = () => {
+    window.location.href = "minside.html";
+  };
+</script>
+
+</body>
+</html>

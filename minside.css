@@ -56,6 +56,7 @@ body {
   box-shadow:
     0 20px 60px rgba(0,0,0,.8),
     inset 0 0 0 1px rgba(255,255,255,.05);
+	position: relative;
 	
 	
 }
@@ -261,4 +262,28 @@ body {
 .menu-btn.game{
   border-left: 4px solid #ff4a4a; /* rød kant */
   --pulse-color: rgba(255,74,74,0.45);
+}
+
+.back-btn {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+
+  padding: 5px 12px;
+
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.1);
+
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+
+  color: white;
+  font-size: 14px;
+
+  cursor: pointer;
+}
+
+.back-btn:hover {
+  background: rgba(255,255,255,0.1);
+  transform: translateX(-2px);
 }

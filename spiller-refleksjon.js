@@ -79,8 +79,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (backBtn) {
     backBtn.addEventListener("click", () => {
-      window.location.href = "./minside.html";
-    });
+  window.history.back();
+});
   }
 });
 
